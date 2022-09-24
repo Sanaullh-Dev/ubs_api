@@ -3,7 +3,7 @@ const sql = require("../../config/db.connection.js");
 
 // Get Main Category
 exports.getMain = (req, res) => {
-  let query = "SELECT * FROM ubs.category where cat_subid=0";
+  let query = "SELECT * FROM ubs.category where cat_subid=0 order by cat_id ASC";
 
   sql.query(query, (err, result) => {
     if (err) {
@@ -12,7 +12,7 @@ exports.getMain = (req, res) => {
         message: " Some error on find all booking data",
       });
     }
-    // console.log("Booking_Data : " , result);
+    // console.log("Main Categories : " , result);
     return res.status(200).send(result);
   });
 };

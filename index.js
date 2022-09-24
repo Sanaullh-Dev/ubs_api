@@ -8,6 +8,11 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// --- this line code for assets public access
+app.use("/assets",express.static('assets'));
+app.use("/upload",express.static('upload'));
+
+
 var corsOptions = {
   origin: "http://localhost:4200",
   credentials: true,

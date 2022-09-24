@@ -5,7 +5,7 @@ var router = require('express').Router();
 router.use("/category", require("./category/category.routes.js"));
 
 // Routes : Add Post
-router.use("/addpost", require("./addpost/addpost.routes.js"));
+router.use("/adspost", require("./adspost/adspost.routes.js"));
 
 // Routes : Add Post
 router.use("/chats", require("./chats/chats.routes.js"));

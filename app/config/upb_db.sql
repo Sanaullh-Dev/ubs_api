@@ -1,37 +1,32 @@
-CREATE SCHEMA `ubs` ;
+CREATE SCHEMA `ubs`;
 
 ------------------------ Category/ Sub-category Table -------------------------------
-  CREATE TABLE `category` (
+CREATE TABLE `category` (
   `cat_id` int NOT NULL AUTO_INCREMENT,
   `cat_name` varchar(45) NOT NULL,
   `cat_subid` int DEFAULT '0',
   `cat_img` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`cat_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
-
+------------------------ Type List Table -------------------------------
+CREATE TABLE `ubs`.`type_list` (
+  `ty_id` INT NOT NULL AUTO_INCREMENT,
+  `ty_name` VARCHAR(45) NULL,
+  `subcat_id` INT NULL,
+  PRIMARY KEY (`ty_id`)
+);
 
 ------------------------ Category default Values -------------------------------
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Property', '0');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Mobiles', '0');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Jobs', '0');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Bikes', '0');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Elections appliances ', '0');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Commercial vehicles & spare parts', '0');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Furniture', '0');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Fashion', '0');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Book, Sports & hobbies', '0');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Pets', '0');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Services', '0');
-
-
------------------------- Sub-category Default value -------------------------------
 INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('For Sale: Houses & Apartments', '1');
 INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('For Rent: Houses & Apartments', '1');
 INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Lands & Posts', '1');
 INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('For Sale : Shops & Offices', '1');
 INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('For Rent : Shops & Offices', '1');
 INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('PG & Gueses', '1');
+INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Mobile Phone', '2');
+INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Accessories', '2');
+INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Tablets', '2');
 INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Sales & Marketing', '3');
 INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('BPO & Telecaller', '3');
 INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Driver', '3');
@@ -72,9 +67,7 @@ INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Driver & Taxi', 
 INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Health & Beauty', '11');
 INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Other Services', '11');
 
-
 ------------------------ User Table -------------------------------
-
 CREATE TABLE `user_info` (
   `uid` int NOT NULL AUTO_INCREMENT,
   `uname` varchar(150) NOT NULL,
@@ -83,28 +76,27 @@ CREATE TABLE `user_info` (
   `uemail` varchar(45) NOT NULL,
   `uimg` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
+) ENGINE = InnoDB AUTO_INCREMENT = 4 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 ------------------------ Add Post -------------------------------
-CREATE TABLE `addpost` (
+CREATE TABLE `adspost` (
   `p_id` int NOT NULL AUTO_INCREMENT,
   `p_date` datetime NOT NULL,
   `p_title` varchar(255) NOT NULL,
-  `p_price` varchar(45) DEFAULT NULL,
+  `p_brand` varchar(255) NOT NULL,
   `p_describe` varchar(550) DEFAULT NULL,
-  `p_uid` varchar(45) NOT NULL,
-  `p_imgcover` varchar(255) NOT NULL,
+  `p_img1` varchar(255) NOT NULL,
   `p_img2` varchar(255) DEFAULT NULL,
   `p_img3` varchar(255) DEFAULT NULL,
-  `p_details` json DEFAULT NULL,
+  `p_img4` varchar(255) DEFAULT NULL,
+  `p_img5` varchar(255) DEFAULT NULL,
+  `p_price` double DEFAULT NULL,
   `p_location` varchar(45) NOT NULL,
   `p_mcat` int NOT NULL,
   `p_scat` int NOT NULL,
+  `p_uid` varchar(45) NOT NULL,
   PRIMARY KEY (`p_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-
+);
 
 ------------------------ Table Chats -------------------------------
 CREATE TABLE `chats_info` (
@@ -115,16 +107,13 @@ CREATE TABLE `chats_info` (
   `user_to` int NOT NULL,
   `chat_status` varchar(45) NOT NULL,
   PRIMARY KEY (`chat_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
+) ENGINE = InnoDB AUTO_INCREMENT = 7 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 ------------------------ post_status -------------------------------
 CREATE TABLE `post_status` (
   `uid` int NOT NULL,
   `pid` int NOT NULL,
   `p_favorite` tinyint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 -- SELECT chats_info.user_from,user_info.uname FROM chats_info inner join user_info on chats_info.user_from=user_info.uid where (user_from = 1 or user_to = 1) group by chats_info.user_from,chats_info.user_touser_info.uname;

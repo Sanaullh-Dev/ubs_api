@@ -7,7 +7,7 @@ const maxsize = 1024 * 1024 * 5;
 let storage = multer.diskStorage({
   destination: function (req, file, cb) {
 
-    loc = req.body.location ? `./upload/${req.body.location}` : `./upload/NA/`;
+    loc = req.body.pLocation ? `./upload/postImages/${req.body.pLocation}` : `./upload/postImages/NA/`;
     fs.mkdirSync(loc, { recursive : true});
     cb(null, loc);
   },
@@ -16,20 +16,20 @@ let storage = multer.diskStorage({
   },
 });
 
-let fileFilter = (req, file, cb) => {
-  if (file.mimetype === "image/jpeg" || file.mimetype === "image/jpg") {
-    cb(null, true);
-  } else {
-    cb("File Format only support jpeg/jpg", false);
-  }
-};
+// let fileFilter = (req, file, cb) => {
+//   if (file.mimetype === "image/jpeg" || file.mimetype === "image/jpg") {
+//     cb(null, true);
+//   } else {
+//     cb("File Format only support jpeg/jpg", false);
+//   }
+// };
 
 let upload = multer({
   storage: storage,
   limits: {
     fileSize: maxsize,
   },
-  fileFilter: fileFilter,
+  // fileFilter: fileFilter,
 });
 
 module.exports = upload;

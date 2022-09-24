@@ -9,6 +9,6 @@ router.get("/history", chatsController.history);
 router.get("/lastseen", chatsController.lastSeen);
 
 // chats Create 
-router.post("/messageSend", chatsController.messageSend);
+router.post("/message", chatsController.messageSend);
 
 module.exports = router;
