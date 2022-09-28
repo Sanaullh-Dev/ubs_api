@@ -2,7 +2,7 @@ const multer = require("multer");
 const fs = require('fs');
 
 // const date = new Date().toISOString().substring(0, 10) + "_";
-const maxsize = 1024 * 1024 * 5;
+// const maxsize = 1024 * 1024 * 5;
 
 let storage = multer.diskStorage({
   destination: function (req, file, cb) {
