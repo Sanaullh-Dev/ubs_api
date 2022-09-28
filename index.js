@@ -38,7 +38,7 @@ app.listen(PORT, () => {
 });
 
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome into UBS API" });
+  res.json({ message: "Welcome into B and S API" });
 });
 
 var sql = require("./app/config/db.connection.js")
