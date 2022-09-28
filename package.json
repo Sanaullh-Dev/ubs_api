@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server"
+    "start" : "node index.js",
+    "run": "nodemon server"
   },
   "keywords": [],
   "author": "sanaulla shaikh",
@@ -25,6 +26,9 @@
     "passport": "^0.6.0",
     "passport-google-oauth2": "^0.2.0",
     "util": "^0.12.4"
+  },
+  "engines": {
+    "node": "16.17.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.19"
