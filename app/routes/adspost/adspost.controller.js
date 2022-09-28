@@ -58,7 +58,7 @@ exports.recentAds = (req, res) => {
     if (err) {
       // console.log("Error :" ,err);
       return res.status(500).send({
-        message: " Some error on find all booking data",
+        message: " Some error on find all Ads Post selected data",
       });
     }
     // console.log("Booking_Data : " , result);
@@ -83,7 +83,7 @@ exports.relatedAds = (req , res) => {
     if (err) {
       // console.log("Error :" ,err);
       return res.status(500).send({
-        message: " Some error on find all booking data",
+        message: " Some error on find all Ads Post data",
       });
     }
     // console.log("Booking_Data : " , result);
@@ -153,7 +153,7 @@ exports.filterAds = (req, res) => {
     if (err) {
       // console.log("Error :" ,err);
       return res.status(500).send({
-        message: " Some error on find all booking data",
+        message: " Some error on find all Ads post data",
       });
     }
     return res.status(200).send(result);

@@ -18,7 +18,7 @@ exports.history = (req, res) => {
     if (err) {
       // console.log("Error :" ,err);
       return res.status(500).send({
-        message: " Some error on find all booking data",
+        message: " Some error on find all Charts data",
       });
     }
     // console.log("Booking_Data : " , result);
@@ -43,7 +43,7 @@ exports.lastSeen = (req, res) => {
     if (err) {
       // console.log("Error :" ,err);
       return res.status(500).send({
-        message: " Some error on find all booking data",
+        message: " Some error on find all Chats data",
       });
     }
     // console.log("Booking_Data : " , result);

@@ -9,7 +9,7 @@ exports.getMain = (req, res) => {
     if (err) {
       // console.log("Error :" ,err);
       return res.status(500).send({
-        message: " Some error on find all booking data",
+        message: " Some error on find all Category data",
       });
     }
     // console.log("Main Categories : " , result);
@@ -34,7 +34,7 @@ exports.getSub = (req, res) => {
     if (err) {
       // console.log("Error :" ,err);
       return res.status(500).send({
-        message: " Some error on find all booking data",
+        message: " Some error on find all Category data",
       });
     }
     return res.status(200).send(result);
