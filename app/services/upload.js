@@ -26,9 +26,9 @@ let storage = multer.diskStorage({
 
 let upload = multer({
   storage: storage,
-  limits: {
-    fileSize: maxsize,
-  },
+  // limits: {
+  //   fileSize: maxsize,
+  // },
   // fileFilter: fileFilter,
 });
 
