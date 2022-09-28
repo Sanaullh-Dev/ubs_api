@@ -3,7 +3,7 @@ const sql = require("../../config/db.connection.js");
 
 // Get Main Category
 exports.getMain = (req, res) => {
-  let query = "SELECT * FROM ubs.category where cat_subid=0 order by cat_id ASC";
+  let query = "SELECT * FROM category where cat_subid=0 order by cat_id ASC";
 
   sql.query(query, (err, result) => {
     if (err) {
@@ -28,7 +28,7 @@ exports.getSub = (req, res) => {
 
   var mainId = req.params.mainId;
   
-  let query = `SELECT * FROM ubs.category where cat_subid='${mainId}$'`;
+  let query = `SELECT * FROM category where cat_subid='${mainId}$'`;
 
   sql.query(query, (err, result) => {
     if (err) {

@@ -12,7 +12,7 @@ exports.history = (req, res) => {
   var userId1 = req.query.userId1;
   var userId2 = req.query.userId2;
 
-  let query = `SELECT * FROM ubs.chats_info where (user_from = ${userId1} AND user_to = ${userId2}) OR (user_from = ${userId2} AND user_to = ${userId1}) ORDER BY chat_date`;
+  let query = `SELECT * FROM chats_info where (user_from = ${userId1} AND user_to = ${userId2}) OR (user_from = ${userId2} AND user_to = ${userId1}) ORDER BY chat_date`;
 
   sql.query(query, (err, result) => {
     if (err) {
