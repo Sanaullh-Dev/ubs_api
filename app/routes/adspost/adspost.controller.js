@@ -7,7 +7,7 @@ exports.postCreate = (req, res) => {
       message: " Content can't be Empty !",
     });
 
-  console.log(req.body);
+  // console.log(req.body);
 
   // console.log("file Lenght :" , Object.keys(req.files.).length);
   // console.log("file Lenght :" , req.files[0].path);
@@ -76,8 +76,8 @@ exports.relatedAds = (req , res) => {
   }
 
   var mainId = req.params.mainId;
-
-  let query = `SELECT * FROM adspost where p_mcat =${mainId} order by p_date LIMIT 20`;
+  
+  let query = `SELECT * FROM adspost where p_mcat=${mainId} order by p_date LIMIT 20`;
 
   sql.query(query, (err, result) => {
     if (err) {
@@ -156,6 +156,33 @@ exports.filterAds = (req, res) => {
         message: " Some error on find all Ads post data",
       });
     }
+    return res.status(200).send(result);
+  });
+};
+
+
+// Search result with keyword
+exports.keywordSearch = (req, res) => {
+  
+  if(!req.params.keyword) {
+    return res.status(400).send({
+      message: "Missing Main Category ID in query",
+    });
+  }
+
+  var keyword = req.params.keyword;
+
+  let query = `SELECT * FROM ubs.ads_post where ubs.ads_post.p_title like '%${keyword}%' or ubs.ads_post.p_describe like '%${keyword}%' or ubs.ads_post.p_location like '%${keyword}%' or ubs.ads_post.mainCat like '%${keyword}%' or ubs.ads_post.subCat like '%${keyword}%'`;
+
+    // console.log(query);
+  sql.query(query, (err, result) => {
+    if (err) {
+      // console.log("Error :" ,err);
+      return res.status(500).send({
+        message: "Some error on find with keyword Ads Post",
+      });
+    }
+    // console.log("Booking_Data : " , result);
     return res.status(200).send(result);
   });
 };
