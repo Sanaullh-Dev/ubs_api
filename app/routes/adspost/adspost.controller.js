@@ -172,7 +172,8 @@ exports.keywordSearch = (req, res) => {
 
   var keyword = req.params.keyword;
 
-  let query = `SELECT * FROM ubs.ads_post where ubs.ads_post.p_title like '%${keyword}%' or ubs.ads_post.p_describe like '%${keyword}%' or ubs.ads_post.p_location like '%${keyword}%' or ubs.ads_post.mainCat like '%${keyword}%' or ubs.ads_post.subCat like '%${keyword}%'`;
+  // let query = `SELECT * FROM ubs.ads_post where ubs.ads_post.p_title like '%${keyword}%' or ubs.ads_post.p_describe like '%${keyword}%' or ubs.ads_post.p_location like '%${keyword}%' or ubs.ads_post.mainCat like '%${keyword}%' or ubs.ads_post.subCat like '%${keyword}%'`;
+  let query = `SELECT * FROM ubs.keyword_search where ubs.keyword_search.keyword like '${keyword}%'`;
 
     // console.log(query);
   sql.query(query, (err, result) => {
