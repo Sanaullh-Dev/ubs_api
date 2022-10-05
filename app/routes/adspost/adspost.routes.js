@@ -12,8 +12,11 @@ router.get("/relatedAds/mainId-:mainId", addpostCont.relatedAds);
 // Get top 20 recent ads 
 router.get("/filter", addpostCont.filterAds);
 
-// Get Search result 
+// Get Search keyword list result 
 router.get("/search-:keyword", addpostCont.keywordSearch);
+
+// Get Ads list keyword wise 
+router.get("/keywordSearch-:keyword", addpostCont.keywordWiseList);
 
 
 // For data insert data into models-profile

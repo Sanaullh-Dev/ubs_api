@@ -166,15 +166,42 @@ exports.keywordSearch = (req, res) => {
   
   if(!req.params.keyword) {
     return res.status(400).send({
-      message: "Missing Main Category ID in query",
+      message: "Missing keyword for get lists of keyword",
     });
   }
 
   var keyword = req.params.keyword;
 
-  // let query = `SELECT * FROM ubs.ads_post where ubs.ads_post.p_title like '%${keyword}%' or ubs.ads_post.p_describe like '%${keyword}%' or ubs.ads_post.p_location like '%${keyword}%' or ubs.ads_post.mainCat like '%${keyword}%' or ubs.ads_post.subCat like '%${keyword}%'`;
   let query = `SELECT * FROM ubs.keyword_search where ubs.keyword_search.keyword like '${keyword}%'`;
 
+    // console.log(query);
+  sql.query(query, (err, result) => {
+    if (err) {
+      // console.log("Error :" ,err);
+      return res.status(500).send({
+        message: "Some error on find with keyword Ads Post",
+      });
+    }
+    // console.log("Booking_Data : " , result);
+    return res.status(200).send(result);
+  });
+};
+
+
+// Search Ads list with keyword
+exports.keywordWiseList = (req, res) => {
+  
+  if(!req.params.keyword) {
+    return res.status(400).send({
+      message: "Missing keyword for search",
+    });
+  }
+
+  var keyword = req.params.keyword;
+
+  let query = `SELECT * FROM ubs.ads_post where ubs.ads_post.p_title like '%${keyword}%' or ubs.ads_post.p_describe like '%${keyword}%' or ubs.ads_post.p_location like '%${keyword}%' or ubs.ads_post.mainCat like '%${keyword}%' or ubs.ads_post.subCat like '%${keyword}%'`;
+
+  
     // console.log(query);
   sql.query(query, (err, result) => {
     if (err) {
