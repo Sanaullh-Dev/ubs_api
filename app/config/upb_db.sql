@@ -68,19 +68,19 @@ INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Health & Beauty'
 INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Other Services', '11');
 
 ------------------------ User Table -------------------------------
-CREATE TABLE `ubs`.`users` (
-  `uid` VARCHAR(255) NOT NULL,
-  `log_id` VARCHAR(45) NOT NULL,
-  `log_pass` VARCHAR(45) NOT NULL,
-  `uname` VARCHAR(45) NOT NULL,
-  `u_about` VARCHAR(300) NULL,
-  `u_country` VARCHAR(45) NULL,
-  `u_phone` INT NULL,
-  `u_email` VARCHAR(70) NULL,
-  `u_photo` VARCHAR(255) NULL,
-  `login_with` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`uid`))
-COMMENT = '	';
+CREATE TABLE `users` (
+  `uid` INT NOT NULL AUTO_INCREMENT,
+  `log_id` varchar(45) NOT NULL,
+  `log_pass` varchar(45) NOT NULL,
+  `u_name` varchar(45) NOT NULL,
+  `u_about` varchar(300) DEFAULT NULL,
+  `u_country` varchar(45) DEFAULT NULL,
+  `u_phone` VARCHAR(10) NULL DEFAULT NULL ,
+  `u_email` varchar(70) DEFAULT NULL,
+  `u_photo` varchar(255) DEFAULT NULL,
+  `login_with` varchar(45) NOT NULL,
+  PRIMARY KEY (`uid`)
+);
 
 
 ------------------------ Add Post -------------------------------
