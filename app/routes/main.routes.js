@@ -11,6 +11,6 @@ router.use("/adspost", require("./adspost/adspost.routes.js"));
 router.use("/chats", require("./chats/chats.routes.js"));
 
 // Routes : Add Post
-router.use("/auth", require("./user-Login/user_login.routes.js"));
+router.use("/userLogin", require("./user-Login/user_login.routes.js"));
 
 module.exports = router;

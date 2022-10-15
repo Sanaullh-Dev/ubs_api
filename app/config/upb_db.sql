@@ -68,15 +68,20 @@ INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Health & Beauty'
 INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Other Services', '11');
 
 ------------------------ User Table -------------------------------
-CREATE TABLE `user_info` (
-  `uid` int NOT NULL AUTO_INCREMENT,
-  `uname` varchar(150) NOT NULL,
-  `udesc` varchar(255) NOT NULL,
-  `umob` varchar(45) NOT NULL,
-  `uemail` varchar(45) NOT NULL,
-  `uimg` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`uid`)
-) ENGINE = InnoDB AUTO_INCREMENT = 4 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+CREATE TABLE `ubs`.`users` (
+  `uid` VARCHAR(255) NOT NULL,
+  `log_id` VARCHAR(45) NOT NULL,
+  `log_pass` VARCHAR(45) NOT NULL,
+  `uname` VARCHAR(45) NOT NULL,
+  `u_about` VARCHAR(300) NULL,
+  `u_country` VARCHAR(45) NULL,
+  `u_phone` INT NULL,
+  `u_email` VARCHAR(70) NULL,
+  `u_photo` VARCHAR(255) NULL,
+  `login_with` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`uid`))
+COMMENT = '	';
+
 
 ------------------------ Add Post -------------------------------
 CREATE TABLE `adspost` (

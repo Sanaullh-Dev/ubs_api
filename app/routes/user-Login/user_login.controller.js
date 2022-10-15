@@ -1,3 +1,5 @@
+const sql = require("../../config/db.connection.js");
+
 // var dateTime = require("node-datetime");
 // const sql = require("../../config/db.js");
 // const jwt = require("jsonwebtoken");
@@ -172,28 +174,47 @@
 //   );
 // };
 
-// // Promise Funcation for User Register
-// function registerUser(user) {
-//   return new Promise((resolve, reject) => {
-//     let sqlQuery =
-//       "INSERT INTO users(`u_name`, `u_email`, `login_with`,`uid`) VALUES(?,?,?,?)";
-//     sql.query(sqlQuery, user, (err, insert_res) => {
-//       if (err) {
-//         // console.log("sql", err);
-//         reject({
-//           message:
-//             "Some error occurred while signUp with Social :" || err.message,
-//         });
-//       } else {
-//         // console.log("after register User getLogin :", insert_res.insertId);
-//         getLogin(insert_res.insertId, user)
-//           .then((res) => resolve(res))
-//           .catch((err) => reject(err));
-//       }
-//     });
-//   });
-// }
+// Promise Function for User Register
+exports.signUp = (req, res, next) => {
+  if (!req.body)
+    res.status(400).send({
+      message: " Content can't be Empty !",
+    });
 
+    console.log("body " , req.body);
+
+  const userData = [
+    req.body.uid,
+    req.body.log_id,
+    req.body.log_pass,
+    req.body.uname,
+    req.body.u_about,
+    req.body.u_country,
+    req.body.u_phone,
+    req.body.u_email,
+    req.body.u_photo,
+    req.body.login_with,
+  ];
+
+  const column =
+    "`uid`,`log_id`,`log_pass`,`uname`,`u_about`,\
+    `u_country`,`u_phone`,`u_email`,`u_photo`,`login_with`";
+
+  let sqlQuery = `INSERT INTO users(${column}) VALUES(?,?,?,?,?,?,?,?,?,?)`;
+
+  sql.query(sqlQuery, userData, (err, insert_res) => {
+    if (err) {
+      console.log("error : ", err);
+      return res.status(500).send({
+        message:
+          "Some error occurred while creating the SignUp :" || err.message,
+      });
+    } else {
+      console.log(result.insertId);
+      return res.status(200).send({ id: result.insertId, date: result });
+    }
+  });
+};
 
 // Promise Funcation for User Login
 // function getLogin(userId, userData) {
@@ -269,33 +290,24 @@
 //   });
 // }
 
-
-exports.otpLogin = (req , res , next) => {
-  userServices.createOtp(req.body , (error , result )=> {
-    if(error) return next(error);  
-
-    return res.status(200).send({
-      message : "Success",
-      data : result
-    });
-  });
-}
-
-exports.verifyOtp = (req , res, next) => {
-  userServices.verifyOtp(req.body , (error, result) => {
-    if(error) return next(error);  
+exports.otpLogin = (req, res, next) => {
+  userServices.createOtp(req.body, (error, result) => {
+    if (error) return next(error);
 
     return res.status(200).send({
-      message : "Success",
-      data : result
+      message: "Success",
+      data: result,
     });
   });
 };
 
-exports.demo = (req , res) => {
-  console.log("Hello");
-  return res.status(200).send({
-    message : "Success",
-    data : result
+exports.verifyOtp = (req, res, next) => {
+  userServices.verifyOtp(req.body, (error, result) => {
+    if (error) return next(error);
+
+    return res.status(200).send({
+      message: "Success",
+      data: result,
+    });
   });
 };
