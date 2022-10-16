@@ -2,7 +2,9 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
-const PORT = process.env.PORT || 8080;
+const http = require("http");
+const dotenv = require("dotenv");
+const PORT = process.env.HOSTPORT || 8080;
 
 const app = express();
 
@@ -18,30 +20,37 @@ var corsOptions = {
   origin: "http://localhost:4200",
   credentials: true,
 };
-app.use(cors(corsOptions));
+app.use(cors());
 
-app.use(function (req, res, next) {
+app.use((req, res, error, next) => {
   //Enabling CORS
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+  // res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
   );
+  if(req.method === "OPTIONS") {
+    res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+    return res.status(200).json({});
+  }
   next();
 });
 
-
-
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
+var httpServer = http.createServer(app);
+var server = httpServer.listen(PORT, ()=> {
+  console.log("server is running : ", PORT);
 });
+
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${process.env.HOSTPORT}.`);
+// });
 
 app.get("/", (req, res) => {
   res.json({ message: "Welcome into B and S API" });
 });
 
-var sql = require("./app/config/db.connection.js")
+// var sql = require("./app/config/db.connection.js")
 
 // main Routes
 app.use("/", require("./app/routes/main.routes.js"));
