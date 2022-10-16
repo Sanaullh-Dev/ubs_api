@@ -15,20 +15,20 @@
 //     port : 3306
 // }
 
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
 dotenv.config();
 
-// AWS mysql database 
+// AWS mysql database
 module.exports = {
-    host : process.env.DBHOST,
-    user : process.env.USER,
-    password : process.env.PASSWORD,
-    database : process.env.DATABASE,
-    port : process.env.PORT
-}
+  host: "ubs-database.cx9ieclkbphh.us-east-1.rds.amazonaws.com",
+  user: "admin",
+  password: "Sanaulla#0405",
+  database: "ubs",
+  port: 3306,
+};
 
-// host : "ubs-database.cx9ieclkbphh.us-east-1.rds.amazonaws.com",
-// user : "admin",
-// password : "Sanaulla#0405",
-// database : "ubs",
-// port : 3306
+// host : process.env.DBHOST,
+//     user : process.env.USER,
+//     password : process.env.PASSWORD,
+//     database : process.env.DATABASE,
+//     port : process.env.PORT
