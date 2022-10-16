@@ -1,8 +1,8 @@
 const sql = require("../../config/db.connection.js");
-const { body, validationResult, check } = require("express-validator");
+const { validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 
-exports.otpLogin = (req, res, next) => {
+exports.getOtp = (req, res, next) => {
   userServices.createOtp(req.body, (error, result) => {
     if (error) return next(error);
 
@@ -31,47 +31,56 @@ exports.signUp = (req, res, next) => {
   if (!error.isEmpty()) {
     return res.status(503).send(error);
   }
+  const body = req.body;
 
-  if (req.body.login_with === "phone" && req.body.u_phone === "") {
+  if (body.login_with === "phone" && body.u_phone === "") {
     return res.status(503).send({
       error: "If you have Login with Phone than can't be empty",
     });
   }
-  if (req.body.login_with === "email" && req.body.u_email === "") {
+  if (body.login_with === "email" && body.u_email === "") {
     return res.status(503).send({
       error: "If you have Login with Email than can't be empty",
     });
   }
 
-  const loginId =
-    req.body.login_with === "phone" ? req.body.u_phone : req.body.u_email;
+  const loginId = body.login_with === "phone" ? body.u_phone : body.u_email;
 
+  console.log(loginId);
   sql.query(
     `select * from users where u_phone = "${loginId}" or u_email="${loginId}";`,
     async (err, result) => {
-      if (result.length) {
+      if (err) {
         return res.status(409).send({
-          message: `This ${req.body.login_with} already register`,
+          message: `Some error occurred while sql query :`,
+          error: err,
         });
-      } 
-      else {        
-        const salt = await bcrypt.genSalt(10);
-        bcrypt.hash(req.body.log_pass, salt, (err, hashCode) => {
+      }
+      if (result.length !== 0) {
+        return res.status(409).send({
+          message: `This ${body.login_with} already register`,
+        });
+      } else {
+        // const salt = await bcrypt.genSalt(10);
+        console.log("result", result);
+        bcrypt.hash(body.log_pass, 10, (err, hashResult) => {
           if (err) {
             return res.status(500).send({
               error: "Hash Err :" + err,
             });
           } else {
+            // console.log("hashCod");
+            console.log("hashCode : ", hashResult);
             const userData = [
-              req.body.log_id,
-              hashCode,
-              req.body.u_name,
-              req.body.u_about || null,
-              req.body.u_country || null,
-              req.body.u_phone || null,
-              req.body.u_email || null,
-              req.body.u_photo || null,
-              req.body.login_with,
+              body.log_id,
+              hashResult,
+              body.u_name,
+              body.u_about || null,
+              body.u_country || null,
+              body.u_phone || null,
+              body.u_email || null,
+              body.u_photo || null,
+              body.login_with,
             ];
             const column =
               "`log_id`,`log_pass`,`u_name`,`u_about`,\
@@ -110,7 +119,7 @@ exports.logIn = (req, res, next) => {
 
   const body = req.body;
 
-  let sqlQuery = `select * from users where\
+  let sqlQuery = `select log_pass from users where\
   u_phone="${body.loginId}" or u_email="${body.loginId}"`;
 
   sql.query(sqlQuery, (err, result) => {
@@ -120,26 +129,22 @@ exports.logIn = (req, res, next) => {
         message: "Some error occurred while Login :" || err.message,
       });
     }
-    console.log("data:", result);
+
     if (result.length == 0) {
       return res.status(404).send({
         message: "Login Id is not registered" || err.message,
       });
     } else {
-      console.log("pass", body.password);
-      console.log("pass", result[0]["log_pass"]);
-
-      bcrypt
-        .compare(body.password, result[0]["log_pass"])
-        .then((rsult) => {
-          console.log("has rsult: ", rsult);
-          return res.status(403).send(`Yours password : ${rsult}`);
-        })
-        .catch((err) => {
-          console.log("has ero: ", rsult);
-        });
-
-      // return res.status(200).send({ id: result.insertId, date: result });
+      bcrypt.compare(body.password, result[0]["log_pass"], (err, result) => {
+        if (err) {
+          console.log("has ero: ", err);
+          return res.status(503).send({ "hash compare error": err });
+        } else if (result === true) {
+          return res.status(200).send({ message: "Login Successfully" });
+        } else {
+          return res.status(422).send({ message: "Invalid password" });
+        }
+      });
     }
   });
 };

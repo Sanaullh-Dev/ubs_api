@@ -2,7 +2,7 @@ const { body, validationResult, check } = require("express-validator");
 const validator = require("validator");
 
 exports.signUpValidation = [
-  check("log_id", "Login Id is Empty").not().isEmpty(),
+  // check("log_id", "Login Id is Empty").not().isEmpty(),
   check("log_pass", "Login Password is Empty").not().isEmpty(),
   check("log_pass", "Password must be 6 or more characters").isLength({
     min: 6,

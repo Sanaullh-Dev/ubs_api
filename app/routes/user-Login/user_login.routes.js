@@ -10,17 +10,16 @@ const {
 
 const userController = require("./user_login.controller.js");
 
-// For User signUp
+// For User signUp/ registration 
 router.post("/singUp",signUpValidation, userController.signUp);
 
-// For User signUp
+// For User Login
 router.post("/logIn",loginValidation, userController.logIn);
 
+// For Get Otp
+router.post("/otpLogin", userController.getOtp);
 
-// router.post("/get_user", auth.authenticateToke, userController.getUser);
-router.post("/otpLogin", userController.otpLogin);
-
-// router.post("/get_user", auth.authenticateToke, userController.getUser);
+// for verification of OTP code
 router.post("/verifyOtp", userController.verifyOtp);
 
 module.exports = router;
