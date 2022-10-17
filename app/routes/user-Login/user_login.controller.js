@@ -1,26 +1,37 @@
 const sql = require("../../config/db.connection.js");
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
+const userServices = require("../../services/user.services.js");
 
 exports.getOtp = (req, res, next) => {
-  userServices.createOtp(req.body, (error, result) => {
-    if (error) return next(error);
-
-    return res.status(200).send({
-      message: "Success",
-      data: result,
-    });
+  userServices.createOtp(req.body, (error, hashCode, otp) => {
+    if (error) {
+      return next(error);
+    } else {
+      userServices.sendSMS(req.body, otp, (error, result) => {
+        if (error) {
+          return res.status(503).send({ error: error });
+        } else {
+          return res.status(200).send({
+            message: "Success Sent OTP",
+            hash: hashCode,
+          });
+        }
+      });
+    }
   });
 };
 
 exports.verifyOtp = (req, res, next) => {
   userServices.verifyOtp(req.body, (error, result) => {
-    if (error) return next(error);
-
-    return res.status(200).send({
-      message: "Success",
-      data: result,
-    });
+    if (error) {
+      return res.status(403).send({ error: "Invalid OTP" });
+    } else {
+      return res.status(200).send({
+        message: "Success",
+        data: result,
+      });
+    }
   });
 };
 
