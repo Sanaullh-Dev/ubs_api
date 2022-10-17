@@ -22,6 +22,9 @@ router.post("/otpLogin", userController.getOtp);
 // for verification of OTP code
 router.post("/verifyOtp", userController.verifyOtp);
 
+// for Send SMS  ******** this test current not available
+// router.post("/sendSMS", userController.sendSMS);
+
 module.exports = router;
 
 // For User login - local
