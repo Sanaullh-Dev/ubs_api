@@ -20,16 +20,11 @@ dotenv.config();
 
 // AWS mysql database
 module.exports = {
-  host: "%",
-  user: "ec2-user",
-  password: "Sana#0405",
-  database: "ubs",
-  port: "3306",
+host: process.env.DBHOST,
+user: process.env.USER,
+password: process.env.PASSWORD,
+database: process.env.DATABASE,
+port: process.env.PORT,
 };
 
 
-// host: process.env.DBHOST,
-// user: process.env.USER,
-// password: process.env.PASSWORD,
-// database: process.env.DATABASE,
-// port: process.env.PORT,
