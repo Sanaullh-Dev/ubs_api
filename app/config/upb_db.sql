@@ -122,3 +122,42 @@ CREATE TABLE `post_status` (
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 -- SELECT chats_info.user_from,user_info.uname FROM chats_info inner join user_info on chats_info.user_from=user_info.uid where (user_from = 1 or user_to = 1) group by chats_info.user_from,chats_info.user_touser_info.uname;
+
+
+--------------- view -----------------------
+USE `ubs`;
+CREATE  OR REPLACE VIEW `ads_post` AS
+select `ads`.`p_id` AS `p_id`,
+`ads`.`p_date` AS `p_date`,
+`ads`.`p_title` AS `p_title`,
+`ads`.`p_brand` AS `p_brand`,
+`ads`.`p_describe` AS `p_describe`,
+`ads`.`p_img1` AS `p_img1`,
+`ads`.`p_img2` AS `p_img2`,
+`ads`.`p_img3` AS `p_img3`,
+`ads`.`p_img4` AS `p_img4`,
+`ads`.`p_img5` AS `p_img5`,
+`ads`.`p_price` AS `p_price`,
+`ads`.`p_location` AS `p_location`,
+`ads`.`p_mcat` AS `p_mcat`,
+`ads`.`p_scat` AS `p_scat`,
+`ads`.`p_uid` AS `p_uid`,
+`cat`.`cat_name` AS `mainCat`,
+`subcat`.`cat_name` AS `subCat` 
+from ((`adspost` `ads` join `category` `cat` on((`ads`.`p_mcat` = `cat`.`cat_id`))) join `category` `subcat` on((`ads`.`p_scat` = `subcat`.`cat_id`)));;
+
+
+-------  keyword search - view --------------
+USE `ubs`;
+CREATE  OR REPLACE VIEW `keyword_search` AS
+ SELECT 
+        `ul`.`keyword` AS `keyword`
+    FROM
+        (SELECT 
+            `category`.`cat_name` AS `keyword`
+        FROM
+            `category` UNION ALL SELECT 
+            `adspost`.`p_title` AS `keyword`
+        FROM
+            `adspost`) `ul`
+    ORDER BY `ul`.`keyword`;
