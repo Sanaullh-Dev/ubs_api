@@ -1,14 +1,13 @@
-const mysql = require("mysql");
-const dbconfig = require("./db.config.js");
+const mysql = require("mysql2");
+const dbConfig = require("./db.config.js");
 
 // Create a conneaction to the database
-const conn = mysql.createPool({
-    host : dbconfig.host,
-    user : dbconfig.user,
-    password : dbconfig.password,
-    database : dbconfig.database,
-    port : dbconfig.port,
-    connectTimeout: 30000
+const conn = mysql.createConnection({
+    host : dbConfig.host,
+    user : dbConfig.user,
+    password : dbConfig.password,
+    database : dbConfig.database,
+    port : dbConfig.port,
 });
 
 conn.connect(error => {

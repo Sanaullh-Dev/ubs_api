@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const userServices = require("../../services/user.services.js");
 
 exports.getOtp = (req, res, next) => {
+  console.log(req.body);
   userServices.createOtp(req.body, (error, hashCode, otp) => {
     if (error) {
       return next(error);
