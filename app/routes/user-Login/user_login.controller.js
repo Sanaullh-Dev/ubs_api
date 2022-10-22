@@ -5,11 +5,13 @@ const userServices = require("../../services/user.services.js");
 
 exports.getOtp = (req, res, next) => {
   console.log(req.body);
+  var body = req.body;
   userServices.createOtp(req.body, (error, hashCode, otp) => {
     if (error) {
       return next(error);
     } else {
-      userServices.sendSMS(req.body, otp, (error, result) => {
+      console.log("OTP : ", otp);
+      userServices.sendSMS(body, otp, (error, result) => {
         if (error) {
           return res.status(503).send({ error: error });
         } else {

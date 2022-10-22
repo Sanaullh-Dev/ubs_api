@@ -16,10 +16,10 @@ app.use("/assets",express.static('assets'));
 app.use("/upload",express.static('upload'));
 
 
-var corsOptions = {
-  origin: "http://localhost:4200",
-  credentials: true,
-};
+// var corsOptions = {
+//   origin: "http://localhost:4200",
+//   credentials: true,
+// };
 app.use(cors());
 
 app.use((req, res, error, next) => {
@@ -38,7 +38,7 @@ app.use((req, res, error, next) => {
 });
 
 var httpServer = http.createServer(app);
-var server = httpServer.listen(PORT, ()=> {
+var server = httpServer.listen(PORT,'192.168.1.9', ()=> {
   console.log("server is running : ", PORT);
 });
 

@@ -8,7 +8,6 @@ const AWS = require("aws-sdk");
 const dotenv = require("dotenv");
 dotenv.config();
 
-
 async function createOtp(params, callback) {
   const otp = otpGenerator.generate(4, {
     upperCaseAlphabets: false,
@@ -21,7 +20,7 @@ async function createOtp(params, callback) {
   const hash = crypto.createHash("sha256", key).update(data).digest("hex");
   const fulHash = `${hash}.${expires}`;
 
-  console.log(`Your OTP is ${otp}`);
+  console.log(`Your OTP is ${otp} and phone ${params.phone}`);
 
   return callback(null, fulHash, otp);
 }
@@ -46,11 +45,14 @@ async function verifyOtp(params, callback) {
 }
 
 function sendSMS(params, OTP, callback) {
-  var mobile = params.phone;  
+  console.log("send SMS function", params);
+  var mobile = params.phone;
+  var app_signature = params.app_signature;
   var msg = {
-    Message: `${OTP} is your OTP(One Time Password) to register with BIS-India. Only valid for 5min.`,
-    PhoneNumber: mobile,
+    Message: `<#> Dear Customer, Use code ${OTP} to login to your BIS account. Never share your OTP with anyone. ${app_signature}`,
+    PhoneNumber: "+" + mobile,
   };
+
 
   AWS.config.update({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
