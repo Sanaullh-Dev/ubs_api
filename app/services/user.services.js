@@ -26,6 +26,7 @@ async function createOtp(params, callback) {
 }
 
 async function verifyOtp(params, callback) {
+  // console.log(params);
   let [hashValue, expires] = params.hash.split(".");
 
   let now = Date.now();
@@ -40,7 +41,7 @@ async function verifyOtp(params, callback) {
   if (newCalculateHash == hashValue) {
     return callback(null, "Success");
   }
-
+    
   return callback("Invalid OTP");
 }
 
@@ -49,10 +50,9 @@ function sendSMS(params, OTP, callback) {
   var mobile = params.phone;
   var app_signature = params.app_signature;
   var msg = {
-    Message: `<#> Dear Customer, Use code ${OTP} to login to your BIS account. Never share your OTP with anyone. ${app_signature}`,
-    PhoneNumber: "+" + mobile,
+    Message: `Dear Customer, Use code ${OTP} to login to your BIS account. Never share your OTP with anyone. ${app_signature}`,
+    PhoneNumber: "+" + mobile,       
   };
-
 
   AWS.config.update({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,

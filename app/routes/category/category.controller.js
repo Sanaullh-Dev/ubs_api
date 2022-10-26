@@ -7,7 +7,7 @@ exports.getMain = (req, res) => {
 
   sql.query(query, (err, result) => {
     if (err) {
-      // console.log("Error :" ,err);
+      console.log("Error :" ,err);
       return res.status(500).send({
         message: " Some error on find all Category data",
       });

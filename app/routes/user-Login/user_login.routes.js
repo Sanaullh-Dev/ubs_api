@@ -10,6 +10,9 @@ const {
 
 const userController = require("./user_login.controller.js");
 
+// For check User Registration 
+router.post("/checkUser", userController.checkUser);
+
 // For User signUp/ registration 
 router.post("/singUp",signUpValidation, userController.signUp);
 
