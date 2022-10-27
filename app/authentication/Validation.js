@@ -11,7 +11,7 @@ exports.signUpValidation = [
   check("login_with", "Login with is Empty").not().isEmpty(),
   body("u_phone").custom((value, { req }) => {
     // this code is check if phone no is not blank than check digit will 10
-    if (value !== "" && value.length !== 10) {
+    if (value !== "" && value.length !== 12) {
       return Promise.reject("Phone in 10 digit required");
     } else {
       return Promise.resolve("valid");

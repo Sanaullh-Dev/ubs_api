@@ -132,7 +132,7 @@ exports.signUp = (req, res, next) => {
             // console.log("hashCod");
             console.log("hashCode : ", hashResult);
             const userData = [
-              body.log_id,
+              loginId,
               hashResult,
               body.u_name,
               body.u_about || null,
