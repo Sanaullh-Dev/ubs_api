@@ -193,7 +193,10 @@ exports.keywordWiseList = (req, res) => {
 
   var keyword = req.params.keyword;
 
-  let query = `SELECT * FROM ubs.ads_post where ubs.ads_post.p_title like '%${keyword}%' or ubs.ads_post.p_describe like '%${keyword}%' or ubs.ads_post.p_location like '%${keyword}%' or ubs.ads_post.mainCat like '%${keyword}%' or ubs.ads_post.subCat like '%${keyword}%'`;
+  let query = `SELECT * FROM ads_post_view where ads_post_view.p_title like \
+  '%${keyword}%' or ads_post_view.p_describe like '%${keyword}%' or \
+  ads_post_view.p_location like '%${keyword}%' or ads_post_view.mainCat like \
+  '%${keyword}%' or ads_post_view.subCat like '%${keyword}%'`;
 
   // console.log(query);
   sql.query(query, (err, result) => {
@@ -250,8 +253,8 @@ exports.userAction = (req, res, next) => {
         const postReactionData = [
           body.uid,
           body.pid || null,
-          body.p_favorite === "true" ? 1 : 0,
-          body.p_view === "true" ? 1 : 0,
+          body.p_favorite,
+          body.p_view,
         ];
         
         const column = "`uid`,`pid`,`p_favorite`,`p_view`";

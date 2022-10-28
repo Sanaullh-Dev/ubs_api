@@ -18,54 +18,245 @@ CREATE TABLE `ubs`.`type_list` (
 );
 
 ------------------------ Category default Values -------------------------------
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('For Sale: Houses & Apartments', '1');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('For Rent: Houses & Apartments', '1');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Lands & Posts', '1');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('For Sale : Shops & Offices', '1');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('For Rent : Shops & Offices', '1');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('PG & Gueses', '1');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Mobile Phone', '2');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Accessories', '2');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Tablets', '2');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Sales & Marketing', '3');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('BPO & Telecaller', '3');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Driver', '3');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Office Assistant', '3');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Teacher', '3');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Cook', '3');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Motorcycles', '4');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Scooters', '4');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Spare Parts', '4');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Bicycles', '4');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('TVs, Video – Audio', '5');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Kitchen & Other Appliances', '5');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Computer Accessories', '5');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('ACs', '5');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Commercial & other Vehicles', '6');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Spare Parts', '6');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Sofa & Dining', '7');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Beds & Wardrobes', '7');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Home Décor & Garden', '7');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Kids Furniture', '7');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Other Household Items', '7');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Man', '8');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Woman', '8');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Kids', '8');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Books', '9');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Gym & Fitness', '9');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Musical Instruments', '9');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Sports Equipment', '9');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Other Hobbies', '9');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Fishes & Aquarium', '10');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Pet Food & Accessories', '10');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Dogs', '10');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Cats', '10');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Other Pets', '10');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Electronics & Computer', '11');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Education & Classes', '11');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Driver & Taxi', '11');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Health & Beauty', '11');
-INSERT INTO `ubs`.`category` (`cat_name`, `cat_subid`) VALUES ('Other Services', '11');
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('For Sale: Houses & Apartments', '1');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('For Rent: Houses & Apartments', '1');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Lands & Posts', '1');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('For Sale : Shops & Offices', '1');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('For Rent : Shops & Offices', '1');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('PG & Gueses', '1');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Mobile Phone', '2');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Accessories', '2');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Tablets', '2');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Sales & Marketing', '3');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('BPO & Telecaller', '3');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Driver', '3');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Office Assistant', '3');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Teacher', '3');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Cook', '3');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Motorcycles', '4');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Scooters', '4');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Spare Parts', '4');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Bicycles', '4');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('TVs, Video – Audio', '5');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Kitchen & Other Appliances', '5');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Computer Accessories', '5');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('ACs', '5');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Commercial & other Vehicles', '6');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Spare Parts', '6');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Sofa & Dining', '7');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Beds & Wardrobes', '7');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Home Décor & Garden', '7');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Kids Furniture', '7');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Other Household Items', '7');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Man', '8');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Woman', '8');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Kids', '8');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Books', '9');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Gym & Fitness', '9');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Musical Instruments', '9');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Sports Equipment', '9');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Other Hobbies', '9');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Fishes & Aquarium', '10');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Pet Food & Accessories', '10');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Dogs', '10');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Cats', '10');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Other Pets', '10');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Electronics & Computer', '11');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Education & Classes', '11');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Driver & Taxi', '11');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Health & Beauty', '11');
+
+INSERT INTO
+  `ubs`.`category` (`cat_name`, `cat_subid`)
+VALUES
+  ('Other Services', '11');
 
 ------------------------ User Table -------------------------------
 CREATE TABLE `users` (
@@ -75,13 +266,12 @@ CREATE TABLE `users` (
   `u_name` varchar(45) NOT NULL,
   `u_about` varchar(300) DEFAULT NULL,
   `u_country` varchar(45) DEFAULT NULL,
-  `u_phone` VARCHAR(10) NULL DEFAULT NULL ,
+  `u_phone` VARCHAR(10) NULL DEFAULT NULL,
   `u_email` varchar(70) DEFAULT NULL,
   `u_photo` varchar(255) DEFAULT NULL,
   `login_with` varchar(45) NOT NULL,
   PRIMARY KEY (`uid`)
 );
-
 
 ------------------------ Add Post -------------------------------
 CREATE TABLE `adspost` (
@@ -120,45 +310,54 @@ CREATE TABLE `post_reaction` (
   `pid` int DEFAULT NULL,
   `p_favorite` int DEFAULT NULL,
   `p_view` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 -- SELECT chats_info.user_from,user_info.uname FROM chats_info inner join user_info on chats_info.user_from=user_info.uid where (user_from = 1 or user_to = 1) group by chats_info.user_from,chats_info.user_touser_info.uname;
-
-
 --------------- view -----------------------
 USE `ubs`;
-CREATE  OR REPLACE VIEW `ads_post` AS
-select `ads`.`p_id` AS `p_id`,
-`ads`.`p_date` AS `p_date`,
-`ads`.`p_title` AS `p_title`,
-`ads`.`p_brand` AS `p_brand`,
-`ads`.`p_describe` AS `p_describe`,
-`ads`.`p_img1` AS `p_img1`,
-`ads`.`p_img2` AS `p_img2`,
-`ads`.`p_img3` AS `p_img3`,
-`ads`.`p_img4` AS `p_img4`,
-`ads`.`p_img5` AS `p_img5`,
-`ads`.`p_price` AS `p_price`,
-`ads`.`p_location` AS `p_location`,
-`ads`.`p_mcat` AS `p_mcat`,
-`ads`.`p_scat` AS `p_scat`,
-`ads`.`p_uid` AS `p_uid`,
-`cat`.`cat_name` AS `mainCat`,
-`subcat`.`cat_name` AS `subCat` 
-from ((`adspost` `ads` join `category` `cat` on((`ads`.`p_mcat` = `cat`.`cat_id`))) join `category` `subcat` on((`ads`.`p_scat` = `subcat`.`cat_id`)));;
-
-
--------  keyword search - view --------------
-USE `ubs`;
-CREATE  OR REPLACE VIEW `keyword_search` AS
+CREATE  OR REPLACE VIEW `ads_post_view` AS
  SELECT 
-        `ul`.`keyword` AS `keyword`
+        `ads`.`p_id` AS `p_id`,
+        `ads`.`p_date` AS `p_date`,
+        `ads`.`p_title` AS `p_title`,
+        `ads`.`p_brand` AS `p_brand`,
+        `ads`.`p_describe` AS `p_describe`,
+        `ads`.`p_img1` AS `p_img1`,
+        `ads`.`p_img2` AS `p_img2`,
+        `ads`.`p_img3` AS `p_img3`,
+        `ads`.`p_img4` AS `p_img4`,
+        `ads`.`p_img5` AS `p_img5`,
+        `ads`.`p_price` AS `p_price`,
+        `ads`.`p_location` AS `p_location`,
+        `ads`.`p_mcat` AS `p_mcat`,
+        `ads`.`p_scat` AS `p_scat`,
+        `ads`.`p_uid` AS `p_uid`,
+        `cat`.`cat_name` AS `mainCat`,
+        `subcat`.`cat_name` AS `subCat`,
+        `users`.`log_id` AS `userId`
     FROM
-        (SELECT 
-            `category`.`cat_name` AS `keyword`
-        FROM
-            `category` UNION ALL SELECT 
-            `adspost`.`p_title` AS `keyword`
-        FROM
-            `adspost`) `ul`
-    ORDER BY `ul`.`keyword`;
+        (((`adspost` `ads`
+        JOIN `category` `cat` ON ((`ads`.`p_mcat` = `cat`.`cat_id`)))
+        JOIN `category` `subcat` ON ((`ads`.`p_scat` = `subcat`.`cat_id`)))
+        JOIN `users` ON ((`ads`.`p_uid` = `users`.`uid`)));
+
+
+CREATE
+OR REPLACE VIEW `keyword_search` AS
+SELECT
+  `ul`.`keyword` AS `keyword`
+FROM
+  (
+    SELECT
+      `category`.`cat_name` AS `keyword`
+    FROM
+      `category`
+    UNION
+    ALL
+    SELECT
+      `adspost`.`p_title` AS `keyword`
+    FROM
+      `adspost`
+  ) `ul`
+ORDER BY
+  `ul`.`keyword`;
