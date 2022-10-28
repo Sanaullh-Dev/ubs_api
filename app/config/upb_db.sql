@@ -114,12 +114,13 @@ CREATE TABLE `chats_info` (
   PRIMARY KEY (`chat_id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 7 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
------------------------- post_status -------------------------------
-CREATE TABLE `post_status` (
-  `uid` int NOT NULL,
-  `pid` int NOT NULL,
-  `p_favorite` tinyint NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+------------------------ post_reaction -------------------------------
+CREATE TABLE `post_reaction` (
+  `uid` varchar(255) NOT NULL,
+  `pid` int DEFAULT NULL,
+  `p_favorite` int DEFAULT NULL,
+  `p_view` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- SELECT chats_info.user_from,user_info.uname FROM chats_info inner join user_info on chats_info.user_from=user_info.uid where (user_from = 1 or user_to = 1) group by chats_info.user_from,chats_info.user_touser_info.uname;
 

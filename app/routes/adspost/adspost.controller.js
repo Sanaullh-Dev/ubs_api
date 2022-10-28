@@ -1,4 +1,5 @@
 const sql = require("../../config/db.connection.js");
+const { validationResult } = require("express-validator");
 
 // Add new post
 exports.postCreate = (req, res) => {
@@ -49,7 +50,6 @@ exports.postCreate = (req, res) => {
   });
 };
 
-
 // Find all Data function - OK
 exports.recentAds = (req, res) => {
   let query = "SELECT * FROM adspost order by p_date desc LIMIT 20";
@@ -67,16 +67,15 @@ exports.recentAds = (req, res) => {
 };
 
 // Related Ads
-exports.relatedAds = (req , res) => {
-  
-  if(!req.params.mainId) {
+exports.relatedAds = (req, res) => {
+  if (!req.params.mainId) {
     return res.status(400).send({
       message: "Missing Main Category ID in query",
     });
   }
 
   var mainId = req.params.mainId;
-  
+
   let query = `SELECT * FROM adspost where p_mcat=${mainId} order by p_date LIMIT 20`;
 
   sql.query(query, (err, result) => {
@@ -89,8 +88,7 @@ exports.relatedAds = (req , res) => {
     // console.log("Booking_Data : " , result);
     return res.status(200).send(result);
   });
-
-}
+};
 
 // Find all Data function - OK
 exports.filterAds = (req, res) => {
@@ -160,11 +158,9 @@ exports.filterAds = (req, res) => {
   });
 };
 
-
 // Search result with keyword
 exports.keywordSearch = (req, res) => {
-  
-  if(!req.params.keyword) {
+  if (!req.params.keyword) {
     return res.status(400).send({
       message: "Missing keyword for get lists of keyword",
     });
@@ -174,7 +170,7 @@ exports.keywordSearch = (req, res) => {
 
   let query = `SELECT * FROM ubs.keyword_search where ubs.keyword_search.keyword like '${keyword}%'`;
 
-    // console.log(query);
+  // console.log(query);
   sql.query(query, (err, result) => {
     if (err) {
       // console.log("Error :" ,err);
@@ -187,11 +183,9 @@ exports.keywordSearch = (req, res) => {
   });
 };
 
-
 // Search Ads list with keyword
 exports.keywordWiseList = (req, res) => {
-  
-  if(!req.params.keyword) {
+  if (!req.params.keyword) {
     return res.status(400).send({
       message: "Missing keyword for search",
     });
@@ -201,8 +195,7 @@ exports.keywordWiseList = (req, res) => {
 
   let query = `SELECT * FROM ubs.ads_post where ubs.ads_post.p_title like '%${keyword}%' or ubs.ads_post.p_describe like '%${keyword}%' or ubs.ads_post.p_location like '%${keyword}%' or ubs.ads_post.mainCat like '%${keyword}%' or ubs.ads_post.subCat like '%${keyword}%'`;
 
-  
-    // console.log(query);
+  // console.log(query);
   sql.query(query, (err, result) => {
     if (err) {
       // console.log("Error :" ,err);
@@ -213,4 +206,70 @@ exports.keywordWiseList = (req, res) => {
     // console.log("Booking_Data : " , result);
     return res.status(200).send(result);
   });
+};
+
+// User action on Ads
+exports.userAction = (req, res, next) => {
+  console.log(req.body);
+  const error = validationResult(req);
+
+  if (!error.isEmpty()) {
+    console.log("userAction error", error);
+    return res.status(503).send(error);
+  }
+  const body = req.body;
+
+  sql.query(
+    `select * from post_reaction where uid = "${body.uid}" and pid="${body.pid}";`,
+    async (err, result) => {
+      if (err) {
+        return res.status(409).send({
+          message: `Some error occurred while sql query :`,
+          error: err,
+        });
+      }
+      if (result.length !== 0) {
+        // if data is already save than update value
+        let sqlQuery = `UPDATE post_reaction SET p_favorite = ${body.p_favorite},\
+         p_view = ${body.p_view} WHERE uid =${body.uid} AND pid=${body.pid}`;
+
+        sql.query(sqlQuery, (err, result) => {
+          if (err) {
+            console.log("error : ", err);
+            return res.status(500).send({
+              message: "Some error occurred while update on post_reaction :",
+              Error: err,
+            });
+          } else {
+            return res.status(200).send({ result: result });
+          }
+        });
+      } else {
+        // if data is not found than insert into table
+
+        const postReactionData = [
+          body.uid,
+          body.pid || null,
+          body.p_favorite === "true" ? 1 : 0,
+          body.p_view === "true" ? 1 : 0,
+        ];
+        
+        const column = "`uid`,`pid`,`p_favorite`,`p_view`";
+        let sqlQuery = `INSERT INTO post_reaction(${column}) VALUES(?,?,?,?)`;
+        sql.query(sqlQuery, postReactionData, (err, result) => {
+          if (err) {
+            console.log("error : ", err);
+            return res.status(500).send({
+              message:
+                "Some error occurred while insert post reaction :" ||
+                err.message,
+            });
+          } else {
+            // console.log(result.insertId);
+            return res.status(200).send({ id: result.insertId, date: result });
+          }
+        });
+      }
+    }
+  );
 };

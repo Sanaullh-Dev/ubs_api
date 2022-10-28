@@ -28,19 +28,6 @@ router.post("/verifyOtp", userController.verifyOtp);
 // for Send SMS  ******** this test current not available
 // router.post("/sendSMS", userController.sendSMS);
 
+
 module.exports = router;
 
-// For User login - local
-// router.post("/login",loginValidation , userController.login);
-
-// For User login - social
-// router.post("/social", userController.social);
-
-// For User Authentication
-// router.post("/get_user", auth.authenticateToke, userController.getUser);
-// router.post("/get_user", userController.getUser);
-
-// Get Test user toke
-// router.get("/test_Toke", userController.getSuccess);
-// router.get("/test_Toke",auth.verifyToken, userController.getUser);
-//

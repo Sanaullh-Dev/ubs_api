@@ -26,13 +26,16 @@ exports.signUpValidation = [
   }),
 ];
 
-// .isEmail()
-//     .normalizeEmail({ gmail_remove_dots: true }),
 exports.loginValidation = [
   check("loginId", "Please include a valid email").not().isEmpty(),    
   check("password", "Password must be 6 or more characters").isLength({
     min: 6,
   }),
+];
+
+exports.userActionValidation = [
+  check("uid", "User Id not supplied in body").not().isEmpty(),    
+  check("pid", "Ads Post Id not supplied in body").not().isEmpty() 
 ];
 
 //---------------------------- testing if condition
