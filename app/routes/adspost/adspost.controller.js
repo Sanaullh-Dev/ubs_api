@@ -52,16 +52,23 @@ exports.postCreate = (req, res) => {
 
 // Find all Data function - OK
 exports.recentAds = (req, res) => {
-  let query = "SELECT * FROM adspost order by p_date desc LIMIT 20";
+  var body = req.body;
+
+  if(!body.uid) {
+    return res.status(503).send({message : "user id not supplied"});
+  }
+
+  // let query = "SELECT * FROM adspost order by p_date desc LIMIT 20";
+  let query = `CALL sp_recentAds(${body.uid});`;
+
 
   sql.query(query, (err, result) => {
     if (err) {
-      // console.log("Error :" ,err);
+      console.log("Error :" ,err);
       return res.status(500).send({
         message: " Some error on find all Ads Post selected data",
       });
     }
-    // console.log("Booking_Data : " , result);
     return res.status(200).send(result);
   });
 };

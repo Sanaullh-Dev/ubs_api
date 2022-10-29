@@ -361,3 +361,17 @@ FROM
   ) `ul`
 ORDER BY
   `ul`.`keyword`;
+
+
+
+------------------------ Store Procedure -------------------------------
+DELIMITER $$
+CREATE DEFINER=`admin`@`%` PROCEDURE `sp_recentAds`(IN uid varchar(50))
+BEGIN
+select ads.*,p.p_favorite,p.p_view  from 
+(select a.*, us.u_name,us.u_photo from ubs.adspost as a 
+join ubs.users as us on a.p_uid = us.uid where a.p_uid <> uid) 
+as ads left join 
+(select * from ubs.post_reaction as b where b.uid= uid) as p on ads.p_id = p.pid;
+END$$
+DELIMITER ;
