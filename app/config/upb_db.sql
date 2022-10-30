@@ -306,17 +306,20 @@ CREATE TABLE `chats_info` (
 
 ------------------------ post_reaction -------------------------------
 CREATE TABLE `post_reaction` (
+  `pr_id` int NOT NULL AUTO_INCREMENT, 
   `uid` varchar(255) NOT NULL,
   `pid` int DEFAULT NULL,
   `p_favorite` int DEFAULT NULL,
-  `p_view` int DEFAULT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+  `p_view` int DEFAULT NULL,
+  PRIMARY KEY (`pr_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- SELECT chats_info.user_from,user_info.uname FROM chats_info inner join user_info on chats_info.user_from=user_info.uid where (user_from = 1 or user_to = 1) group by chats_info.user_from,chats_info.user_touser_info.uname;
 --------------- view -----------------------
 USE `ubs`;
+USE `ubs`;
 CREATE  OR REPLACE VIEW `ads_post_view` AS
- SELECT 
+SELECT 
         `ads`.`p_id` AS `p_id`,
         `ads`.`p_date` AS `p_date`,
         `ads`.`p_title` AS `p_title`,
@@ -339,10 +342,9 @@ CREATE  OR REPLACE VIEW `ads_post_view` AS
         (((`adspost` `ads`
         JOIN `category` `cat` ON ((`ads`.`p_mcat` = `cat`.`cat_id`)))
         JOIN `category` `subcat` ON ((`ads`.`p_scat` = `subcat`.`cat_id`)))
-        JOIN `users` ON ((`ads`.`p_uid` = `users`.`uid`)));
+        JOIN `users` ON ((`ads`.`p_uid` = `users`.`log_id`)));;
 
 
-CREATE
 OR REPLACE VIEW `keyword_search` AS
 SELECT
   `ul`.`keyword` AS `keyword`

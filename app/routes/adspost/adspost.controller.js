@@ -53,24 +53,25 @@ exports.postCreate = (req, res) => {
 // Find all Data function - OK
 exports.recentAds = (req, res) => {
   var body = req.body;
+  
+  if (!body.uid) {
+    return res.status(503).send({ message: "user id not supplied" });
+  } else {
+    // let query = "SELECT * FROM adspost order by p_date desc LIMIT 20";
+    let query = `CALL sp_recentAds("${body.uid}");`;
+    console.log(query);
 
-  if(!body.uid) {
-    return res.status(503).send({message : "user id not supplied"});
+    sql.query(query, (err, result) => {
+      if (err) {
+        console.log("Error :", err);
+        return res.status(500).send({
+          message: " Some error on find all Ads Post selected data",
+        });
+      }
+      // console.log(result[0]);
+      return res.status(200).send(result[0]);
+    });
   }
-
-  // let query = "SELECT * FROM adspost order by p_date desc LIMIT 20";
-  let query = `CALL sp_recentAds(${body.uid});`;
-
-
-  sql.query(query, (err, result) => {
-    if (err) {
-      console.log("Error :" ,err);
-      return res.status(500).send({
-        message: " Some error on find all Ads Post selected data",
-      });
-    }
-    return res.status(200).send(result);
-  });
 };
 
 // Related Ads
@@ -256,14 +257,13 @@ exports.userAction = (req, res, next) => {
         });
       } else {
         // if data is not found than insert into table
-
         const postReactionData = [
           body.uid,
           body.pid || null,
           body.p_favorite,
           body.p_view,
         ];
-        
+
         const column = "`uid`,`pid`,`p_favorite`,`p_view`";
         let sqlQuery = `INSERT INTO post_reaction(${column}) VALUES(?,?,?,?)`;
         sql.query(sqlQuery, postReactionData, (err, result) => {

@@ -6,7 +6,7 @@ const {userActionValidation} = require("../../authentication/Validation.js");
 
 
 // Get top 20 recent ads 
-router.get("/", addpostCont.recentAds);
+router.post("/", addpostCont.recentAds);
 
 // Related Ads
 router.get("/relatedAds/mainId-:mainId", addpostCont.relatedAds);
