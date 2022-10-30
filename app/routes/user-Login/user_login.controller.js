@@ -68,9 +68,7 @@ exports.checkUser = (req, res, next) => {
         });
       }
       if (result.length !== 0) {
-        return res.status(200).send({
-          message: `This ${loginId} already register`,
-        });
+        return res.status(200).send(result[0]);
       } else {
         return res.status(404).send({
           message: `This ${loginId} Not found`,
