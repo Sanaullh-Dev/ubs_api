@@ -27,4 +27,10 @@ router.post("/", upload.array("ads_image", 5), addpostCont.postCreate);
 // add user favorites and view Ads
 router.post("/userAction",userActionValidation, addpostCont.userAction);
 
+// Update favorites into post reaction 
+router.post("/favoritesUpdate",userActionValidation, addpostCont.favoritesUpdate);
+
+// get One post details with user post reaction
+router.post("/getPostDetails",userActionValidation, addpostCont.getPostDetails);
+
 module.exports = router;

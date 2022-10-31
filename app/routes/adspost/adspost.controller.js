@@ -53,12 +53,36 @@ exports.postCreate = (req, res) => {
 // Find all Data function - OK
 exports.recentAds = (req, res) => {
   var body = req.body;
-  
+
   if (!body.uid) {
     return res.status(503).send({ message: "user id not supplied" });
   } else {
     // let query = "SELECT * FROM adspost order by p_date desc LIMIT 20";
     let query = `CALL sp_recentAds("${body.uid}");`;
+    console.log(query);
+
+    sql.query(query, (err, result) => {
+      if (err) {
+        console.log("Error :", err);
+        return res.status(500).send({
+          message: " Some error on find all Ads Post selected data",
+        });
+      }
+      // console.log(result[0]);
+      return res.status(200).send(result[0]);
+    });
+  }
+};
+
+// Get one Post ads with user post reaction with postId and userId
+exports.getPostDetails = (req, res) => {
+  var body = req.body;
+
+  if (!body.uid) {
+    return res.status(503).send({ message: "user id not supplied" });
+  } else {
+    // let query = "SELECT * FROM adspost order by p_date desc LIMIT 20";
+    let query = `CALL get_postDetail("${body.uid}" ,${body.pid});`;
     console.log(query);
 
     sql.query(query, (err, result) => {
@@ -219,7 +243,7 @@ exports.keywordWiseList = (req, res) => {
   });
 };
 
-// User action on Ads
+// User post reaction on Ads
 exports.userAction = (req, res, next) => {
   console.log(req.body);
   const error = validationResult(req);
@@ -282,4 +306,30 @@ exports.userAction = (req, res, next) => {
       }
     }
   );
+};
+
+// Update post reaction of p_favorite
+exports.favoritesUpdate = (req, res, next) => {
+  const error = validationResult(req);
+
+  if (!error.isEmpty()) {
+    console.log("userAction error", error);
+    return res.status(503).send(error);
+  }
+  const body = req.body;
+
+  let sqlQuery = `UPDATE post_reaction SET p_favorite = ${body.p_favorite} \
+   WHERE uid =${body.uid} AND pid=${body.pid}`;
+
+  sql.query(sqlQuery, (err, result) => {
+    if (err) {
+      console.log("error : ", err);
+      return res.status(500).send({
+        message: "Some error occurred while update on post_reaction :",
+        Error: err,
+      });
+    } else {
+      return res.status(200).send({ result: result });
+    }
+  });
 };

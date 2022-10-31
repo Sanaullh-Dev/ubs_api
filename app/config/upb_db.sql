@@ -366,7 +366,9 @@ ORDER BY
 
 
 
------------------------- Store Procedure -------------------------------
+-- ******************************* Store Procedure ******************************* --
+
+------- list of recent Ads with user post reaction
 DELIMITER $$
 CREATE DEFINER=`admin`@`%` PROCEDURE `sp_recentAds`(IN uid varchar(50))
 BEGIN
@@ -377,3 +379,16 @@ as ads left join
 (select * from ubs.post_reaction as b where b.uid= uid) as p on ads.p_id = p.pid;
 END$$
 DELIMITER ;
+
+
+--------------------------- for one post details with user post reaction
+DELIMITER $$
+CREATE DEFINER=`admin`@`%` PROCEDURE `get_postDetail`(IN uid varchar(50), In pid int)
+BEGIN
+Select podb.*, pr.p_favorite,pr.p_view from 
+(select a.*, us.u_name,us.u_photo from ubs.adspost as a 
+join ubs.users as us on a.p_uid = us.log_id where a.p_id = pid) as podb
+left join
+(select pid,p_favorite, p_view from ubs.post_reaction where a.pid = pid and uid= uid) as pr on podb.p_id = pr.pid;
+END
+
