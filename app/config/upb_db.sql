@@ -387,8 +387,10 @@ CREATE DEFINER=`admin`@`%` PROCEDURE `get_postDetail`(IN uid varchar(50), In pid
 BEGIN
 Select podb.*, pr.p_favorite,pr.p_view from 
 (select a.*, us.u_name,us.u_photo from ubs.adspost as a 
-join ubs.users as us on a.p_uid = us.log_id where a.p_id = pid) as podb
+join ubs.users as us on a.p_uid = us.log_id where a.p_id = 42) as podb
 left join
-(select pid,p_favorite, p_view from ubs.post_reaction where a.pid = pid and uid= uid) as pr on podb.p_id = pr.pid;
-END
+(select * from ubs.post_reaction where uid= "917499604663") as pr on podb.p_id = pr.pid
+END$$
+DELIMITER ;
+
 

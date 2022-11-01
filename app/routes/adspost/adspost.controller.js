@@ -93,7 +93,7 @@ exports.getPostDetails = (req, res) => {
         });
       }
       // console.log(result[0]);
-      return res.status(200).send(result[0]);
+      return res.status(200).send(result[0][0]);
     });
   }
 };
