@@ -9,7 +9,10 @@ const {userActionValidation} = require("../../authentication/Validation.js");
 router.post("/", addpostCont.recentAds);
 
 // Related Ads
-router.get("/relatedAds/mainId-:mainId", addpostCont.relatedAds);
+router.post("/relatedAds/mainId", addpostCont.relatedAds);
+
+// Get All favorite List of Ads
+router.post("/favoriteList", addpostCont.getFavoriteList);
 
 // Get top 20 recent ads 
 router.get("/filter", addpostCont.filterAds);

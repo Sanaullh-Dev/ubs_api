@@ -100,25 +100,55 @@ exports.getPostDetails = (req, res) => {
 
 // Related Ads
 exports.relatedAds = (req, res) => {
-  if (!req.params.mainId) {
+  var body = req.body;
+
+  console.log(body);
+
+  if (!body.mainId) {
     return res.status(400).send({
-      message: "Missing Main Category ID in query",
+      message: "Missing Main Category ID",
     });
   }
 
-  var mainId = req.params.mainId;
-
-  let query = `SELECT * FROM adspost where p_mcat=${mainId} order by p_date LIMIT 20`;
-
+  if (!body.uid) {
+    return res.status(400).send({
+      message: "Missing User ID",
+    });
+  }
+  
+  let query = `CALL related_ads("${body.uid}" ,${body.mainId});`;
+    
   sql.query(query, (err, result) => {
     if (err) {
       // console.log("Error :" ,err);
       return res.status(500).send({
-        message: " Some error on find all Ads Post data",
+        message: " Some error on related ads",
       });
-    }
-    // console.log("Booking_Data : " , result);
-    return res.status(200).send(result);
+    }    
+    return res.status(200).send(result[0]);
+  });
+};
+
+// Get All favorite List of Ads
+exports.getFavoriteList = (req, res) => {
+  var body = req.body;
+
+  if (!body.uid) {
+    return res.status(400).send({
+      message: "Missing User ID",
+    });
+  }
+  
+  let query = `CALL all_favoriteList("${body.uid}");`;
+    
+  sql.query(query, (err, result) => {
+    if (err) {
+      // console.log("Error :" ,err);
+      return res.status(500).send({
+        message: " Some error on related ads",
+      });
+    }    
+    return res.status(200).send(result[0]);
   });
 };
 

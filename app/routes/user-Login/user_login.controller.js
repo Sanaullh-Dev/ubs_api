@@ -169,9 +169,10 @@ exports.signUp = (req, res, next) => {
 };
 
 exports.logIn = (req, res, next) => {
+  // console.log(req.body);
   const error = validationResult(req);
-
   if (!error.isEmpty()) {
+    console.log(error);
     return res.status(503).send(error);
   }
 

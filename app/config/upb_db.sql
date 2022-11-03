@@ -393,4 +393,31 @@ left join
 END$$
 DELIMITER ;
 
+---------------------------- related ads list --------------------------
+DELIMITER $$
+CREATE DEFINER=`admin`@`%` PROCEDURE `related_ads`(IN uid varchar(50) , IN mid int)
+BEGIN
+select ads.*,p.p_favorite,p.p_view  from 
+(select a.*, us.u_name,us.u_photo from ubs.adspost as a 
+join ubs.users as us on a.p_uid = us.log_id where a.p_uid <> uid and a.p_mcat = mid) 
+as ads left join 
+(select * from ubs.post_reaction as b where b.uid= uid) as p on ads.p_id = p.pid;
+END$$
+DELIMITER ;
+
+
+----------------------- get all favorites -------------------------
+DELIMITER $$
+CREATE DEFINER=`admin`@`%` PROCEDURE `all_favoriteList`(IN uid varchar(50))
+BEGIN
+select ads.*,p.p_favorite,p.p_view  from 
+(select a.*, us.u_name,us.u_photo from ubs.adspost as a 
+join ubs.users as us on a.p_uid = us.log_id where a.p_uid <> uid) 
+as ads left join 
+(select * from ubs.post_reaction as b where b.uid= uid) as p on ads.p_id = p.pid where p.p_favorite = 1;
+END$$
+DELIMITER ;
+
+
+
 
