@@ -4,7 +4,6 @@ const upload = require("../../services/upload.js");
 const {userActionValidation} = require("../../authentication/Validation.js");
   
 
-
 // Get top 20 recent ads 
 router.post("/", addpostCont.recentAds);
 
@@ -14,6 +13,8 @@ router.post("/relatedAds/mainId", addpostCont.relatedAds);
 // Get All favorite List of Ads
 router.post("/favoriteList", addpostCont.getFavoriteList);
 
+// Get All My Sales Ads List
+router.post("/mySalesAds", addpostCont.getMySalesAds);
 // Get top 20 recent ads 
 router.get("/filter", addpostCont.filterAds);
 
@@ -32,6 +33,7 @@ router.post("/userAction",userActionValidation, addpostCont.userAction);
 
 // Update favorites into post reaction 
 router.post("/favoritesUpdate",userActionValidation, addpostCont.favoritesUpdate);
+
 
 // get One post details with user post reaction
 router.post("/getPostDetails",userActionValidation, addpostCont.getPostDetails);

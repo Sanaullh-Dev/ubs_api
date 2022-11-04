@@ -57,10 +57,9 @@ exports.recentAds = (req, res) => {
   if (!body.uid) {
     return res.status(503).send({ message: "user id not supplied" });
   } else {
-    // let query = "SELECT * FROM adspost order by p_date desc LIMIT 20";
+    
     let query = `CALL sp_recentAds("${body.uid}");`;
-    console.log(query);
-
+    
     sql.query(query, (err, result) => {
       if (err) {
         console.log("Error :", err);
@@ -83,7 +82,6 @@ exports.getPostDetails = (req, res) => {
   } else {
     // let query = "SELECT * FROM adspost order by p_date desc LIMIT 20";
     let query = `CALL get_postDetail("${body.uid}" ,${body.pid});`;
-    console.log(query);
 
     sql.query(query, (err, result) => {
       if (err) {
@@ -152,6 +150,29 @@ exports.getFavoriteList = (req, res) => {
   });
 };
 
+// Get All favorite List of Ads
+exports.getMySalesAds = (req, res) => {
+  var body = req.body;
+
+  if (!body.uid) {
+    return res.status(400).send({
+      message: "Missing User ID",
+    });
+  }
+  
+  let query = `CALL my_sellAds("${body.uid}");`;
+    
+  sql.query(query, (err, result) => {
+    if (err) {
+      console.log("Error :" ,err);
+      return res.status(500).send({
+        message: " Some error on related ads",
+      });
+    }    
+    return res.status(200).send(result[0]);
+  });
+};
+
 // Find all Data function - OK
 exports.filterAds = (req, res) => {
   console.log(req.query);
@@ -185,7 +206,7 @@ exports.filterAds = (req, res) => {
     if (sCatId) {
       query = query + (isAnd === true ? " AND" : "") + ` p_scat=${sCatId}`;
       isAnd = true;
-      console.log(query);
+      // console.log(query);
     }
 
     if (minAmt) {
