@@ -57,9 +57,8 @@ exports.recentAds = (req, res) => {
   if (!body.uid) {
     return res.status(503).send({ message: "user id not supplied" });
   } else {
-    
     let query = `CALL sp_recentAds("${body.uid}");`;
-    
+
     sql.query(query, (err, result) => {
       if (err) {
         console.log("Error :", err);
@@ -113,16 +112,16 @@ exports.relatedAds = (req, res) => {
       message: "Missing User ID",
     });
   }
-  
+
   let query = `CALL related_ads("${body.uid}" ,${body.mainId});`;
-    
+
   sql.query(query, (err, result) => {
     if (err) {
       // console.log("Error :" ,err);
       return res.status(500).send({
         message: " Some error on related ads",
       });
-    }    
+    }
     return res.status(200).send(result[0]);
   });
 };
@@ -136,16 +135,16 @@ exports.getFavoriteList = (req, res) => {
       message: "Missing User ID",
     });
   }
-  
+
   let query = `CALL all_favoriteList("${body.uid}");`;
-    
+
   sql.query(query, (err, result) => {
     if (err) {
       // console.log("Error :" ,err);
       return res.status(500).send({
         message: " Some error on related ads",
       });
-    }    
+    }
     return res.status(200).send(result[0]);
   });
 };
@@ -159,17 +158,48 @@ exports.getMySalesAds = (req, res) => {
       message: "Missing User ID",
     });
   }
-  
+
   let query = `CALL my_sellAds("${body.uid}");`;
-    
+
   sql.query(query, (err, result) => {
     if (err) {
-      console.log("Error :" ,err);
+      console.log("Error :", err);
       return res.status(500).send({
         message: " Some error on related ads",
       });
-    }    
+    }
     return res.status(200).send(result[0]);
+  });
+};
+
+// Delete My sales ads
+exports.deleteMySalesAds = (req, res) => {
+  var body = req.body;
+
+  if (!body.uid) {
+    return res.status(400).send({
+      message: "Missing User ID",
+    });
+  }
+
+  if (!body.pid) {
+    return res.status(400).send({
+      message: "Missing Ads Post ID",
+    });
+  }
+
+  let query = `DELETE FROM adspost WHERE p_id =${body.pid} AND p_uid="${body.uid}";`;
+
+  sql.query(query, (err, result) => {
+    if (err) {
+      console.log("Error :", err);
+      return res.status(500).send({
+        message: " Some error on related ads",
+      });
+    }
+    return res
+      .status(200)
+      .send({ message: `Delete Ads post where Post ID = ${body.pid}` });
   });
 };
 

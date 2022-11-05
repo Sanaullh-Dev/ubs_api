@@ -15,6 +15,11 @@ router.post("/favoriteList", addpostCont.getFavoriteList);
 
 // Get All My Sales Ads List
 router.post("/mySalesAds", addpostCont.getMySalesAds);
+
+// Delete My Sales Ads
+router.delete("/deleteMySalesAds", addpostCont.deleteMySalesAds);
+
+
 // Get top 20 recent ads 
 router.get("/filter", addpostCont.filterAds);
 
