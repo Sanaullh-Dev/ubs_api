@@ -39,8 +39,10 @@ router.post("/userAction",userActionValidation, addpostCont.userAction);
 // Update favorites into post reaction 
 router.post("/favoritesUpdate",userActionValidation, addpostCont.favoritesUpdate);
 
-
 // get One post details with user post reaction
 router.post("/getPostDetails",userActionValidation, addpostCont.getPostDetails);
+
+// Get top 20 recent ads 
+router.post("/userProfileAds", addpostCont.userProfileAds);
 
 module.exports = router;

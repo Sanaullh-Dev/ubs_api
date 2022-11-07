@@ -414,3 +414,25 @@ exports.favoritesUpdate = (req, res, next) => {
     }
   });
 };
+
+// Find all Data function - OK
+exports.userProfileAds = (req, res) => {
+  var body = req.body;
+
+  if (!body.uid && !body.uid_reaction) {
+    return res.status(503).send({ message: "user id not supplied" });
+  } else {
+    let query = `CALL sp_userAds("${body.uid}","${body.uid_reaction}");`;
+
+    sql.query(query, (err, result) => {
+      if (err) {
+        console.log("Error :", err);
+        return res.status(500).send({
+          message: " Some error on find all Ads Post selected data",
+        });
+      }
+      // console.log(result[0]);
+      return res.status(200).send(result[0]);
+    });
+  }
+};

@@ -418,6 +418,16 @@ as ads left join
 END$$
 DELIMITER ;
 
+-------------------------- get user profile ads ----------------------
+CREATE DEFINER=`admin`@`%` PROCEDURE `sp_userAds`(IN uid varchar(50),IN uid_reaction varchar(50))
+BEGIN
+select ads.*,p.p_favorite,p.p_view  from 
+(select a.*, us.u_name,us.u_photo from ubs.adspost as a 
+join ubs.users as us on a.p_uid = us.log_id where a.p_uid = uid) 
+as ads left join 
+(select * from ubs.post_reaction as b where b.uid= uid_reaction) as p on ads.p_id = p.pid;
+END
+
 
 
 
