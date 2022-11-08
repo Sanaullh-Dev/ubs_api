@@ -19,6 +19,9 @@ router.post("/singUp",signUpValidation, userController.signUp);
 // For User Login
 router.post("/logIn",loginValidation, userController.logIn);
 
+// For Update User data
+router.put("/updateUserProfile", userController.updateUserProfile);
+
 // For Get Otp
 router.post("/otpLogin", userController.getOtp);
 
