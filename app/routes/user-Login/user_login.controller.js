@@ -214,21 +214,17 @@ exports.updateUserProfile = (req, res, next) => {
   const loginId = body.login_with === "phone" ? body.u_phone : body.u_email;
 
   const userData = [
-    loginId,
-    hashResult,
     body.u_name,
     body.u_about || null,
-    body.u_country || null,
     body.u_phone || null,
     body.u_email || null,
-    body.u_photo || null,
-    body.login_with,
+    // body.u_photo || null,
+    Object.keys(req.files).length > 0 ? req.files[0].path : null,
+    body.log_id,
   ];
-  const column =
-    "`u_name`,`u_about`,\
-  `u_country`,`u_phone`,`u_email`,`u_photo`";
-
-  let sqlQuery = `INSERT INTO users(${column}) VALUES(?,?,?,?,?,?,?,?,?)`;
+  
+  let sqlQuery = "UPDATE users SET `u_name`=?, `u_about`=?, \
+      `u_phone`=?, `u_email`=?,`u_photo`=? WHERE `log_id`=?";
 
   sql.query(sqlQuery, userData, (err, result) => {
     if (err) {
@@ -238,7 +234,6 @@ exports.updateUserProfile = (req, res, next) => {
           "Some error occurred while creating the SignUp :" || err.message,
       });
     } else {
-      // console.log(result.insertId);
       return res.status(200).send({ id: result.insertId, date: result });
     }
   });

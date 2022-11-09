@@ -1,6 +1,6 @@
 var router = require("express").Router();
 const addpostCont = require("./adspost.controller.js");
-const upload = require("../../services/upload.js");
+const upload = require("../../services/post_upload.js");
 const {userActionValidation} = require("../../authentication/Validation.js");
   
 
@@ -18,7 +18,6 @@ router.post("/mySalesAds", addpostCont.getMySalesAds);
 
 // Delete My Sales Ads
 router.delete("/deleteMySalesAds", addpostCont.deleteMySalesAds);
-
 
 // Get top 20 recent ads 
 router.get("/filter", addpostCont.filterAds);
