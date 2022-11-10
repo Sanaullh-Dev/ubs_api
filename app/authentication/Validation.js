@@ -3,10 +3,16 @@ const validator = require("validator");
 
 exports.signUpValidation = [
   // check("log_id", "Login Id is Empty").not().isEmpty(),
-  check("log_pass", "Login Password is Empty").not().isEmpty(),
-  check("log_pass", "Password must be 6 or more characters").isLength({
-    min: 6,
-  }),
+  // check("log_pass", "Login Password is Empty").not().isEmpty(),
+  // check("log_pass", "Password must be 6 or more characters").custom(
+  //   (value, { req }) => {
+  //     if (value !== "" && value.length !== 10) {
+  //       return Promise.reject("Password will min 10 lenght");
+  //     } else {
+  //       return Promise.resolve("valid");
+  //     }
+  //   }
+  // ),
   check("u_name", "User Name is Empty").not().isEmpty(),
   check("login_with", "Login with is Empty").not().isEmpty(),
   body("u_phone").custom((value, { req }) => {
@@ -27,15 +33,15 @@ exports.signUpValidation = [
 ];
 
 exports.loginValidation = [
-  check("loginId", "Please include a valid email").not().isEmpty(),    
-  check("password", "Password must be 6 or more characters").isLength({
-    min: 6,
-  }),
+  check("loginId", "Please include a valid email").not().isEmpty(),
+  // check("password", "Password must be 6 or more characters").isLength({
+  //   min: 6,
+  // }),
 ];
 
 exports.userActionValidation = [
-  check("uid", "User Id not supplied in body").not().isEmpty(),    
-  check("pid", "Ads Post Id not supplied in body").not().isEmpty() 
+  check("uid", "User Id not supplied in body").not().isEmpty(),
+  check("pid", "Ads Post Id not supplied in body").not().isEmpty(),
 ];
 
 //---------------------------- testing if condition

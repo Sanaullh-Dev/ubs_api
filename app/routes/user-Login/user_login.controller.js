@@ -178,7 +178,7 @@ exports.logIn = (req, res, next) => {
 
   const body = req.body;
 
-  let sqlQuery = `select log_pass from users where log_id="${body.loginId}"`;
+  let sqlQuery = `select log_pass,login_with from users where log_id="${body.loginId}"`;
 
   sql.query(sqlQuery, (err, result) => {
     if (err) {
@@ -193,6 +193,11 @@ exports.logIn = (req, res, next) => {
         message: "Login Id is not registered" || err.message,
       });
     } else {
+      // if user is login with google is already authorized( don't check password) 
+      if (result[0]["login_with"] == "google") {
+        return res.status(200).send({ message: "Login Successfully" });
+      }
+
       bcrypt.compare(body.password, result[0]["log_pass"], (err, result) => {
         if (err) {
           console.log("has ero: ", err);
@@ -222,8 +227,9 @@ exports.updateUserProfile = (req, res, next) => {
     Object.keys(req.files).length > 0 ? req.files[0].path : null,
     body.log_id,
   ];
-  
-  let sqlQuery = "UPDATE users SET `u_name`=?, `u_about`=?, \
+
+  let sqlQuery =
+    "UPDATE users SET `u_name`=?, `u_about`=?, \
       `u_phone`=?, `u_email`=?,`u_photo`=? WHERE `log_id`=?";
 
   sql.query(sqlQuery, userData, (err, result) => {
