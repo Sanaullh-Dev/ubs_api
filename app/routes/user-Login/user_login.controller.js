@@ -193,7 +193,7 @@ exports.logIn = (req, res, next) => {
         message: "Login Id is not registered" || err.message,
       });
     } else {
-      // if user is login with google is already authorized( don't check password) 
+      // if user is login with google is already authorized( don't check password)
       if (result[0]["login_with"] == "google") {
         return res.status(200).send({ message: "Login Successfully" });
       }
@@ -223,8 +223,11 @@ exports.updateUserProfile = (req, res, next) => {
     body.u_about || null,
     body.u_phone || null,
     body.u_email || null,
-    // body.u_photo || null,
-    Object.keys(req.files).length > 0 ? req.files[0].path : null,
+    body.u_photo == "" || body.u_photo == null
+      ? Object.keys(req.files).length > 0
+        ? req.files[0].path
+        : null
+      : body.u_photo || null,
     body.log_id,
   ];
 
