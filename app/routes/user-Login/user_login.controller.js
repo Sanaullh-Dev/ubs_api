@@ -218,13 +218,16 @@ exports.updateUserProfile = (req, res, next) => {
 
   const loginId = body.login_with === "phone" ? body.u_phone : body.u_email;
 
+  // console.log("Object length:", Object.keys(req.files).length);
+  // console.log("body.u_photo:", body.u_photo);
+
   const userData = [
     body.u_name,
     body.u_about || null,
     body.u_phone || null,
     body.u_email || null,
-    body.u_photo == "" || body.u_photo == 1
-      ? Object.keys(req.files).length > 0
+    body.u_photo == "" || body.u_photo == null
+      ? Object.keys(req.files).length == 1
         ? req.files[0].path
         : null
       : body.u_photo || null,
