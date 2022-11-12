@@ -223,7 +223,7 @@ exports.updateUserProfile = (req, res, next) => {
     body.u_about || null,
     body.u_phone || null,
     body.u_email || null,
-    body.u_photo == "" || body.u_photo == null
+    body.u_photo == "" || body.u_photo == 1
       ? Object.keys(req.files).length > 0
         ? req.files[0].path
         : null
