@@ -306,128 +306,248 @@ CREATE TABLE `chats_info` (
 
 ------------------------ post_reaction -------------------------------
 CREATE TABLE `post_reaction` (
-  `pr_id` int NOT NULL AUTO_INCREMENT, 
+  `pr_id` int NOT NULL AUTO_INCREMENT,
   `uid` varchar(255) NOT NULL,
   `pid` int DEFAULT NULL,
   `p_favorite` int DEFAULT NULL,
   `p_view` int DEFAULT NULL,
   PRIMARY KEY (`pr_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 -- SELECT chats_info.user_from,user_info.uname FROM chats_info inner join user_info on chats_info.user_from=user_info.uid where (user_from = 1 or user_to = 1) group by chats_info.user_from,chats_info.user_touser_info.uname;
---------------- view -----------------------
-USE `ubs`;
-USE `ubs`;
-CREATE  OR REPLACE VIEW `ads_post_view` AS
-SELECT 
-        `ads`.`p_id` AS `p_id`,
-        `ads`.`p_date` AS `p_date`,
-        `ads`.`p_title` AS `p_title`,
-        `ads`.`p_brand` AS `p_brand`,
-        `ads`.`p_describe` AS `p_describe`,
-        `ads`.`p_img1` AS `p_img1`,
-        `ads`.`p_img2` AS `p_img2`,
-        `ads`.`p_img3` AS `p_img3`,
-        `ads`.`p_img4` AS `p_img4`,
-        `ads`.`p_img5` AS `p_img5`,
-        `ads`.`p_price` AS `p_price`,
-        `ads`.`p_location` AS `p_location`,
-        `ads`.`p_mcat` AS `p_mcat`,
-        `ads`.`p_scat` AS `p_scat`,
-        `ads`.`p_uid` AS `p_uid`,
-        `cat`.`cat_name` AS `mainCat`,
-        `subcat`.`cat_name` AS `subCat`,
-        `users`.`log_id` AS `userId`
-    FROM
-        (((`adspost` `ads`
-        JOIN `category` `cat` ON ((`ads`.`p_mcat` = `cat`.`cat_id`)))
-        JOIN `category` `subcat` ON ((`ads`.`p_scat` = `subcat`.`cat_id`)))
-        JOIN `users` ON ((`ads`.`p_uid` = `users`.`log_id`)));;
-
-
-OR REPLACE VIEW `keyword_search` AS
-SELECT
-  `ul`.`keyword` AS `keyword`
-FROM
-  (
-    SELECT
-      `category`.`cat_name` AS `keyword`
-    FROM
-      `category`
-    UNION
-    ALL
-    SELECT
-      `adspost`.`p_title` AS `keyword`
-    FROM
-      `adspost`
-  ) `ul`
-ORDER BY
-  `ul`.`keyword`;
-
-
-
 -- ******************************* Store Procedure ******************************* --
-
 ------- list of recent Ads with user post reaction
-DELIMITER $$
-CREATE DEFINER=`admin`@`%` PROCEDURE `sp_recentAds`(IN uid varchar(50))
-BEGIN
-select ads.*,p.p_favorite,p.p_view  from 
-(select a.*, us.u_name,us.u_photo from ubs.adspost as a 
-join ubs.users as us on a.p_uid = us.uid where a.p_uid <> uid) 
-as ads left join 
-(select * from ubs.post_reaction as b where b.uid= uid) as p on ads.p_id = p.pid;
-END$$
-DELIMITER ;
+DELIMITER $ $ CREATE DEFINER = `admin` @`%` PROCEDURE `sp_recentAds`(IN uid varchar(50)) BEGIN
+select
+  ads.*,
+  p.p_favorite,
+  p.p_view
+from
+  (
+    select
+      a.*,
+      us.u_name,
+      us.u_photo
+    from
+      ubs.adspost as a
+      join ubs.users as us on a.p_uid = us.log_id
+    where
+      a.p_uid <> uid
+  ) as ads
+  left join (
+    select
+      *
+    from
+      ubs.post_reaction as b
+    where
+      b.uid = uid
+  ) as p on ads.p_id = p.pid;
 
+END $ $ DELIMITER;
 
 --------------------------- for one post details with user post reaction
-DELIMITER $$
-CREATE DEFINER=`admin`@`%` PROCEDURE `get_postDetail`(IN uid varchar(50), In pid int)
-BEGIN
-Select podb.*, pr.p_favorite,pr.p_view from 
-(select a.*, us.u_name,us.u_photo from ubs.adspost as a 
-join ubs.users as us on a.p_uid = us.log_id where a.p_id = 42) as podb
-left join
-(select * from ubs.post_reaction where uid= "917499604663") as pr on podb.p_id = pr.pid
-END$$
-DELIMITER ;
+DELIMITER $ $ CREATE DEFINER = `admin` @`%` PROCEDURE `get_postDetail`(IN uid varchar(50), In pid int) BEGIN
+Select
+  podb.*,
+  pr.p_favorite,
+  pr.p_view
+from
+  (
+    select
+      a.*,
+      us.u_name,
+      us.u_photo
+    from
+      ubs.adspost as a
+      join ubs.users as us on a.p_uid = us.log_id
+    where
+      a.p_id = pid
+  ) as podb
+  left join (
+    select
+      *
+    from
+      ubs.post_reaction
+    where
+      uid = uid
+  ) as pr on podb.p_id = pr.pid;
+
+END $ $ DELIMITER;
 
 ---------------------------- related ads list --------------------------
-DELIMITER $$
-CREATE DEFINER=`admin`@`%` PROCEDURE `related_ads`(IN uid varchar(50) , IN mid int)
-BEGIN
-select ads.*,p.p_favorite,p.p_view  from 
-(select a.*, us.u_name,us.u_photo from ubs.adspost as a 
-join ubs.users as us on a.p_uid = us.log_id where a.p_uid <> uid and a.p_mcat = mid) 
-as ads left join 
-(select * from ubs.post_reaction as b where b.uid= uid) as p on ads.p_id = p.pid;
-END$$
-DELIMITER ;
+DELIMITER $ $ CREATE DEFINER = `admin` @`%` PROCEDURE `related_ads`(IN uid varchar(50), IN mid int) BEGIN
+select
+  ads.*,
+  p.p_favorite,
+  p.p_view
+from
+  (
+    select
+      a.*,
+      us.u_name,
+      us.u_photo
+    from
+      ubs.adspost as a
+      join ubs.users as us on a.p_uid = us.log_id
+    where
+      a.p_uid <> uid
+      and a.p_mcat = mid
+  ) as ads
+  left join (
+    select
+      *
+    from
+      ubs.post_reaction as b
+    where
+      b.uid = uid
+  ) as p on ads.p_id = p.pid;
 
+END $ $ DELIMITER;
 
 ----------------------- get all favorites -------------------------
-DELIMITER $$
-CREATE DEFINER=`admin`@`%` PROCEDURE `all_favoriteList`(IN uid varchar(50))
-BEGIN
-select ads.*,p.p_favorite,p.p_view  from 
-(select a.*, us.u_name,us.u_photo from ubs.adspost as a 
-join ubs.users as us on a.p_uid = us.log_id where a.p_uid <> uid) 
-as ads left join 
-(select * from ubs.post_reaction as b where b.uid= uid) as p on ads.p_id = p.pid where p.p_favorite = 1;
-END$$
-DELIMITER ;
+DELIMITER $ $ CREATE DEFINER = `admin` @`%` PROCEDURE `all_favoriteList`(IN uid varchar(50)) BEGIN
+select
+  ads.*,
+  p.p_favorite,
+  p.p_view
+from
+  (
+    select
+      a.*,
+      us.u_name,
+      us.u_photo
+    from
+      ubs.adspost as a
+      join ubs.users as us on a.p_uid = us.log_id
+    where
+      a.p_uid <> uid
+  ) as ads
+  left join (
+    select
+      *
+    from
+      ubs.post_reaction as b
+    where
+      b.uid = uid
+  ) as p on ads.p_id = p.pid
+where
+  p.p_favorite = 1;
+
+END $ $ DELIMITER;
 
 -------------------------- get user profile ads ----------------------
-CREATE DEFINER=`admin`@`%` PROCEDURE `sp_userAds`(IN uid varchar(50),IN uid_reaction varchar(50))
-BEGIN
-select ads.*,p.p_favorite,p.p_view  from 
-(select a.*, us.u_name,us.u_photo from ubs.adspost as a 
-join ubs.users as us on a.p_uid = us.log_id where a.p_uid = uid) 
-as ads left join 
-(select * from ubs.post_reaction as b where b.uid= uid_reaction) as p on ads.p_id = p.pid;
-END
+DELIMITER $ $ CREATE DEFINER = `admin` @`%` PROCEDURE `sp_userAds`(IN uid varchar(50), IN uid_reaction varchar(50)) BEGIN
+select
+  ads.*,
+  p.p_favorite,
+  p.p_view
+from
+  (
+    select
+      a.*,
+      us.u_name,
+      us.u_photo
+    from
+      ubs.adspost as a
+      join ubs.users as us on a.p_uid = us.log_id
+    where
+      a.p_uid = uid
+  ) as ads
+  left join (
+    select
+      *
+    from
+      ubs.post_reaction as b
+    where
+      b.uid = uid_reaction
+  ) as p on ads.p_id = p.pid;
+
+END $ $ DELIMITER;
+
+-------------------------- get user Selling ads ----------------------
+DELIMITER $ $ CREATE DEFINER = `admin` @`%` PROCEDURE `my_sellAds`(IN uid varchar(50)) BEGIN
+select
+  ads.*,
+  p.p_favorite,
+  p.p_view
+from
+  (
+    select
+      a.*,
+      us.u_name,
+      us.u_photo
+    from
+      ubs.adspost as a
+      join ubs.users as us on a.p_uid = us.log_id
+    where
+      a.p_uid = uid
+  ) as ads
+  left join (
+    select
+      pid,
+      CAST(SUM(p_favorite) as SIGNED) as p_favorite,
+      CAST(SUM(p_view) as SIGNED) as p_view
+    from
+      ubs.post_reaction
+    group by
+      pid
+  ) as p on ads.p_id = p.pid;
+
+END $ $ DELIMITER;
+
+--********************************** viewa*******************************
+
+------------------------------------- Ads Post View -------------------------
+CREATE ALGORITHM = UNDEFINED DEFINER = `admin` @`%` SQL SECURITY DEFINER VIEW `ads_post_view` AS
+select
+  `ads`.`p_id` AS `p_id`,
+  `ads`.`p_date` AS `p_date`,
+  `ads`.`p_title` AS `p_title`,
+  `ads`.`p_brand` AS `p_brand`,
+  `ads`.`p_describe` AS `p_describe`,
+  `ads`.`p_img1` AS `p_img1`,
+  `ads`.`p_img2` AS `p_img2`,
+  `ads`.`p_img3` AS `p_img3`,
+  `ads`.`p_img4` AS `p_img4`,
+  `ads`.`p_img5` AS `p_img5`,
+  `ads`.`p_price` AS `p_price`,
+  `ads`.`p_location` AS `p_location`,
+  `ads`.`p_mcat` AS `p_mcat`,
+  `ads`.`p_scat` AS `p_scat`,
+  `ads`.`p_uid` AS `p_uid`,
+  `cat`.`cat_name` AS `mainCat`,
+  `subcat`.`cat_name` AS `subCat`,
+  `users`.`log_id` AS `userId`
+from
+  (
+    (
+      (
+        `adspost` `ads`
+        join `category` `cat` on((`ads`.`p_mcat` = `cat`.`cat_id`))
+      )
+      join `category` `subcat` on((`ads`.`p_scat` = `subcat`.`cat_id`))
+    )
+    join `users` on((`ads`.`p_uid` = `users`.`log_id`))
+  );
 
 
+  ------------------------------------- Keyword Search ---------------------------------
 
-
+CREATE ALGORITHM = UNDEFINED DEFINER = `admin` @`%` SQL SECURITY DEFINER VIEW `keyword_search` AS
+select
+  `ul`.`keyword` AS `keyword`
+from
+  (
+    select
+      `category`.`cat_name` AS `keyword`
+    from
+      `category`
+    union
+    all
+    select
+      `adspost`.`p_title` AS `keyword`
+    from
+      `adspost`
+  ) `ul`
+order by
+  `ul`.`keyword`;
