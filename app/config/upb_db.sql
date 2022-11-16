@@ -316,7 +316,7 @@ CREATE TABLE `post_reaction` (
 
 -- SELECT chats_info.user_from,user_info.uname FROM chats_info inner join user_info on chats_info.user_from=user_info.uid where (user_from = 1 or user_to = 1) group by chats_info.user_from,chats_info.user_touser_info.uname;
 -- ******************************* Store Procedure ******************************* --
-------- list of recent Ads with user post reaction
+------- 1) list of recent Ads with user post reaction
 DELIMITER $ $ CREATE DEFINER = `admin` @`%` PROCEDURE `sp_recentAds`(IN uid varchar(50)) BEGIN
 select
   ads.*,
@@ -345,7 +345,7 @@ from
 
 END $ $ DELIMITER;
 
---------------------------- for one post details with user post reaction
+--------------------------- 2)  for one post details with user post reaction
 DELIMITER $ $ CREATE DEFINER = `admin` @`%` PROCEDURE `get_postDetail`(IN uid varchar(50), In pid int) BEGIN
 Select
   podb.*,
@@ -374,7 +374,7 @@ from
 
 END $ $ DELIMITER;
 
----------------------------- related ads list --------------------------
+---------------------------- 3) related ads list --------------------------
 DELIMITER $ $ CREATE DEFINER = `admin` @`%` PROCEDURE `related_ads`(IN uid varchar(50), IN mid int) BEGIN
 select
   ads.*,
@@ -404,7 +404,7 @@ from
 
 END $ $ DELIMITER;
 
------------------------ get all favorites -------------------------
+----------------------- 4) get all favorites -------------------------
 DELIMITER $ $ CREATE DEFINER = `admin` @`%` PROCEDURE `all_favoriteList`(IN uid varchar(50)) BEGIN
 select
   ads.*,
@@ -435,7 +435,7 @@ where
 
 END $ $ DELIMITER;
 
--------------------------- get user profile ads ----------------------
+-------------------------- 5) get user profile ads ----------------------
 DELIMITER $ $ CREATE DEFINER = `admin` @`%` PROCEDURE `sp_userAds`(IN uid varchar(50), IN uid_reaction varchar(50)) BEGIN
 select
   ads.*,
@@ -464,7 +464,7 @@ from
 
 END $ $ DELIMITER;
 
--------------------------- get user Selling ads ----------------------
+-------------------------- 6) get user Selling ads ----------------------
 DELIMITER $ $ CREATE DEFINER = `admin` @`%` PROCEDURE `my_sellAds`(IN uid varchar(50)) BEGIN
 select
   ads.*,
@@ -495,9 +495,10 @@ from
 
 END $ $ DELIMITER;
 
+
 --********************************** viewa*******************************
 
-------------------------------------- Ads Post View -------------------------
+------------------------------------- 1) Ads Post View -------------------------
 CREATE ALGORITHM = UNDEFINED DEFINER = `admin` @`%` SQL SECURITY DEFINER VIEW `ads_post_view` AS
 select
   `ads`.`p_id` AS `p_id`,
@@ -530,8 +531,9 @@ from
     join `users` on((`ads`.`p_uid` = `users`.`log_id`))
   );
 
+  
 
-  ------------------------------------- Keyword Search ---------------------------------
+  ------------------------------------- 2) Keyword Search ---------------------------------
 
 CREATE ALGORITHM = UNDEFINED DEFINER = `admin` @`%` SQL SECURITY DEFINER VIEW `keyword_search` AS
 select
