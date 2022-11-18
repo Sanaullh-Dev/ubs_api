@@ -495,6 +495,14 @@ from
 
 END $ $ DELIMITER;
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `chat_room_details`(IN uid varchar(50), In pid int)
+BEGIN
+Select *,null as lastMag, null as postType from 
+(select ads.p_id as pId,ads.p_title as pTitle,ads.p_price as pPrice,ads.p_img1 as pImage from ubs.adspost as ads where ads.p_id=pid) as postdb
+join
+(select us.log_id as userId,us.u_name as userName,us.u_photo as userPhoto from ubs.users as us where us.log_id=uid) as pr;
+END
+
 
 --********************************** viewa*******************************
 

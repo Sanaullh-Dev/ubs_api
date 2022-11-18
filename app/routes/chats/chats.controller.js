@@ -1,37 +1,39 @@
 const sql = require("../../config/db.connection.js");
 
+// Get Data of chats room details
+exports.chatRoomData = (req, res) => {
+  var body = req.body;
 
-// Get Main Category
-exports.history = (req, res) => {
-  
-  if(!req.query.userId1 || !req.query.userId2){
+  if (!body)
+    res.status(400).send({
+      message: "can't be Empty body data!",
+    });
+
+  if (!body.userId || !body.pId) {
     return res.status(400).send({
-      message : "Between 2 Users are can't be empty"
+      message: "Missing userId or post Id",
     });
   }
-  var userId1 = req.query.userId1;
-  var userId2 = req.query.userId2;
-
-  let query = `SELECT * FROM chats_info where (user_from = ${userId1} AND user_to = ${userId2}) OR (user_from = ${userId2} AND user_to = ${userId1}) ORDER BY chat_date`;
-
+ 
+  let query = `CALL chat_room_details("${body.userId}",${body.pId});`;
+  
+  // console.log(query);
   sql.query(query, (err, result) => {
     if (err) {
       // console.log("Error :" ,err);
       return res.status(500).send({
-        message: " Some error on find all Charts data",
+        message: "Some error on find with keyword Ads Post",
       });
     }
-    // console.log("Booking_Data : " , result);
-    return res.status(200).send(result);
+    return res.status(200).send(result[0]);
   });
 };
 
-
 // Get Last Seen user
 exports.lastSeen = (req, res) => {
-  if(!req.query.userId){
+  if (!req.query.userId) {
     return res.status(400).send({
-      message : "User can't be empty"
+      message: "User can't be empty",
     });
   }
 
@@ -49,33 +51,27 @@ exports.lastSeen = (req, res) => {
     // console.log("Booking_Data : " , result);
     return res.status(200).send(result);
   });
-
 };
-
-
 
 // Message Send save message
 exports.messageSend = (req, res) => {
-
-  
   if (!req.body)
     res.status(400).send({
       message: " Content can't be Empty !",
-  });
+    });
 
-    const messageData = [
-      new Date(req.body.chatDate),
-      req.body.message,
-      req.body.FromUser,
-      req.body.ToUser,
-      "send"
-    ];
+  const messageData = [
+    new Date(req.body.chatDate),
+    req.body.message,
+    req.body.FromUser,
+    req.body.ToUser,
+    "send",
+  ];
 
-  const column =
-    "chat_date, message, user_from, user_to, chat_status";
+  const column = "chat_date, message, user_from, user_to, chat_status";
 
   let sqlQuery = `INSERT INTO chats_info(${column}) VALUES(?,?,?,?,?)`;
-  
+
   sql.query(sqlQuery, messageData, (err, result) => {
     if (err) {
       console.log("error : ", err);
@@ -88,5 +84,4 @@ exports.messageSend = (req, res) => {
       return res.send({ id: result.insertId, result: result });
     }
   });
-
-}
+};

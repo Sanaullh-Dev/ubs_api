@@ -3,7 +3,7 @@ const chatsController = require("./chats.controller.js");
 
 
 // get chats History between two user
-router.get("/history", chatsController.history);
+router.post("/chatRoomData", chatsController.chatRoomData);
 
 // get Last Seen User
 router.get("/lastseen", chatsController.lastSeen);
