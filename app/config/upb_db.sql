@@ -495,6 +495,8 @@ from
 
 END $ $ DELIMITER;
 
+
+-------------------------- 7) Get Chats Room details  ----------------------
 CREATE DEFINER=`root`@`localhost` PROCEDURE `chat_room_details`(IN uid varchar(50), In pid int)
 BEGIN
 Select *,null as lastMag, null as postType from 
