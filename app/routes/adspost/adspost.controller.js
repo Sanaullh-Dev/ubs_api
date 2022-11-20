@@ -347,8 +347,9 @@ exports.userAction = (req, res, next) => {
       if (result.length !== 0) {
         // if data is already save than update value
         let sqlQuery = `UPDATE post_reaction SET p_favorite = ${body.p_favorite},\
-         p_view = ${body.p_view} WHERE uid =${body.uid} AND pid=${body.pid}`;
+         p_view = ${body.p_view} WHERE uid='${body.uid}' AND pid=${body.pid}`;
 
+        console.log(sqlQuery);
         sql.query(sqlQuery, (err, result) => {
           if (err) {
             console.log("error : ", err);
@@ -400,7 +401,7 @@ exports.favoritesUpdate = (req, res, next) => {
   const body = req.body;
 
   let sqlQuery = `UPDATE post_reaction SET p_favorite = ${body.p_favorite} \
-   WHERE uid =${body.uid} AND pid=${body.pid}`;
+   WHERE uid='${body.uid}' AND pid=${body.pid}`;
 
   sql.query(sqlQuery, (err, result) => {
     if (err) {
