@@ -25,6 +25,7 @@
     "mysql2": "^2.3.3",
     "node-datetime": "^2.1.2",
     "otp-generator": "^4.0.0",
+    "pm2": "^5.2.2",
     "serverless-http": "^3.0.3",
     "util": "^0.12.4"
   },
