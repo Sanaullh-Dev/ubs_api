@@ -266,7 +266,7 @@ CREATE TABLE `users` (
   `u_name` varchar(45) NOT NULL,
   `u_about` varchar(300) DEFAULT NULL,
   `u_country` varchar(45) DEFAULT NULL,
-  `u_phone` VARCHAR(10) NULL DEFAULT NULL,
+  `u_phone` VARCHAR(12) NULL DEFAULT NULL,
   `u_email` varchar(70) DEFAULT NULL,
   `u_photo` varchar(255) DEFAULT NULL,
   `login_with` varchar(45) NOT NULL,

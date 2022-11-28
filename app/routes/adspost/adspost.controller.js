@@ -8,8 +8,6 @@ exports.postCreate = (req, res) => {
       message: " Content can't be Empty !",
     });
 
-  // console.log(req.body);
-
   // console.log("file Lenght :" , Object.keys(req.files.).length);
   // console.log("file Lenght :" , req.files[0].path);
 
@@ -52,7 +50,7 @@ exports.postCreate = (req, res) => {
 
 // Find all Data function - OK
 exports.recentAds = (req, res) => {
-  var body = req.body;
+  var body = req.body;  
 
   if (!body.uid) {
     return res.status(503).send({ message: "user id not supplied" });
@@ -81,7 +79,7 @@ exports.getPostDetails = (req, res) => {
   } else {
     // let query = "SELECT * FROM adspost order by p_date desc LIMIT 20";
     let query = `CALL get_postDetail("${body.uid}" ,${body.pid});`;
-
+    console.log(query);
     sql.query(query, (err, result) => {
       if (err) {
         console.log("Error :", err);
@@ -89,7 +87,7 @@ exports.getPostDetails = (req, res) => {
           message: " Some error on find all Ads Post selected data",
         });
       }
-      // console.log(result[0]);
+      console.log(result[0]);
       return res.status(200).send(result[0][0]);
     });
   }

@@ -30,7 +30,7 @@ router.get("/keywordSearch-:keyword", addpostCont.keywordWiseList);
 
 
 // For data insert data into models-profile
-router.post("/", upload.array("ads_image", 5), addpostCont.postCreate);
+router.post("/saveAds", upload.array("ads_image", 5), addpostCont.postCreate);
 
 // add user favorites and view Ads
 router.post("/userAction",userActionValidation, addpostCont.userAction);
